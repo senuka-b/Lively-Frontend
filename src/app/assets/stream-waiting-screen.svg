@@ -1,0 +1,68 @@
+<svg viewBox="0 0 1280 720" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a0033" />
+      <stop offset="50%" stop-color="#330066" />
+      <stop offset="100%" stop-color="#4b0082" />
+    </linearGradient>
+    
+    <!-- Animation for the dots -->
+    <style>
+      @keyframes dot1 {
+        0%, 100% { opacity: 0.3; }
+        33% { opacity: 1; }
+      }
+      @keyframes dot2 {
+        0%, 100% { opacity: 0.3; }
+        33% { opacity: 1; }
+      }
+      @keyframes dot3 {
+        0%, 100% { opacity: 0.3; }
+        33% { opacity: 1; }
+      }
+      @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 0.7; }
+        50% { transform: scale(1.1); opacity: 1; }
+      }
+      .dot1 { animation: dot1 2s infinite; animation-delay: 0s; }
+      .dot2 { animation: dot2 2s infinite; animation-delay: 0.5s; }
+      .dot3 { animation: dot3 2s infinite; animation-delay: 1s; }
+      .pulse { animation: pulse 3s infinite ease-in-out; }
+    </style>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1280" height="720" fill="url(#bg-gradient)" />
+  
+  <!-- Decorative elements -->
+  <circle cx="200" cy="150" r="80" fill="#6a0dad" opacity="0.3" />
+  <circle cx="1100" cy="600" r="120" fill="#4b0082" opacity="0.2" />
+  <circle cx="1000" cy="200" r="50" fill="#800080" opacity="0.15" />
+  <circle cx="300" cy="550" r="70" fill="#8a2be2" opacity="0.1" />
+  
+  <!-- Subtle grid pattern -->
+  <path d="M0,240 H1280 M0,480 H1280 M426,0 V720 M853,0 V720" stroke="#ffffff" stroke-width="0.5" opacity="0.05" />
+  
+  <!-- Main content -->
+  <g transform="translate(640, 320)" text-anchor="middle">
+    <!-- Animated waiting icon -->
+    <g class="pulse">
+      <circle cx="0" cy="0" r="60" fill="none" stroke="#d8bfd8" stroke-width="4" />
+      <polygon points="20,-30 20,30 -20,0" fill="#d8bfd8" />
+    </g>
+    
+    <!-- Text elements -->
+    <text x="0" y="110" fill="#ffffff" font-family="Arial, sans-serif" font-size="36" font-weight="bold">
+      Waiting till you join the stream
+    </text>
+    <text x="0" y="150" fill="#ffffff" font-family="Arial, sans-serif" font-size="36" font-weight="bold">
+      <tspan class="dot1">.</tspan><tspan class="dot2">.</tspan><tspan class="dot3">.</tspan>
+    </text>
+    
+    <!-- Timestamp placeholder -->
+    <text x="0" y="200" fill="#d8bfd8" font-family="Arial, sans-serif" font-size="20">
+      Stream will begin shortly
+    </text>
+  </g>
+</svg>
