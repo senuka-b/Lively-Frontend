@@ -144,8 +144,36 @@ export class SignalService {
 
   deleteStream(streamCode: string): Observable<void> {
     console.log(`Deleting stream with code: ${streamCode}`);
+    
+    this.endStream(streamCode);
+
     return this.http.delete<void>(`${this.baseUrl}/api/streams/${streamCode}`, {
       headers: this.headers,
+    });
+
+  }
+
+  endStream(streamCode: string): void {
+    console.log(`Ending stream with code: ${streamCode}`);
+  
+    
+    this.ensureConnectedAndSend(
+      `/socket/stream/${streamCode}/end`,
+      JSON.stringify({ streamCode })
+    );
+  }
+
+  listenForStreamEnd(streamCode: string): Observable<void> {
+    console.log(`Listening for stream end on stream ${streamCode}`);
+
+    return new Observable((observer) => {
+      this.stompClient?.subscribe(
+        `/topic/stream/${streamCode}/end`,
+        (message) => {
+          console.log('Stream ended:', message.body);
+          observer.next();
+        }
+      );
     });
   }
 

@@ -66,6 +66,10 @@ export class StudioComponent {
     return `${window.location.origin}/watch/${this.streamCode}`;
   }
 
+  shareStream(): void {
+    window.open(this.fullStreamUrl, '_blank');
+  }
+
   startStream(): void {
     if (!this.isLive) {
       this.isLive = true;
@@ -147,7 +151,7 @@ export class StudioComponent {
           console.log('Stream ended on server');
           alert('Stream ended successfully!');
         });
-        
+
       this.stopTimers();
       this.resetStats();
     }

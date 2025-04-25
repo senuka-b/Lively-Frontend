@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1278 720">
+  <!-- Define gradient -->
+  <defs>
+    <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#121212">
+        <animate attributeName="stop-color" 
+                 values="#121212; #1a1a1a; #121212" 
+                 dur="10s" 
+                 repeatCount="indefinite" />
+      </stop>
+      <stop offset="50%" stop-color="#1e1e1e">
+        <animate attributeName="stop-color" 
+                 values="#1e1e1e; #131313; #1e1e1e" 
+                 dur="10s" 
+                 repeatCount="indefinite" />
+      </stop>
+      <stop offset="100%" stop-color="#181818">
+        <animate attributeName="stop-color" 
+                 values="#181818; #1d1d1d; #181818" 
+                 dur="10s" 
+                 repeatCount="indefinite" />
+      </stop>
+    </linearGradient>
+    
+    <!-- Radial pulse animation -->
+    <radialGradient id="pulseGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+      <stop offset="0%" stop-color="rgba(147, 112, 219, 0.4)">
+        <animate attributeName="stop-color" 
+                 values="rgba(147, 112, 219, 0.4); rgba(147, 112, 219, 0.1); rgba(147, 112, 219, 0.4)" 
+                 dur="4s" 
+                 repeatCount="indefinite" />
+      </stop>
+      <stop offset="100%" stop-color="rgba(147, 112, 219, 0)">
+        <animate attributeName="stop-color" 
+                 values="rgba(147, 112, 219, 0); rgba(147, 112, 219, 0.05); rgba(147, 112, 219, 0)" 
+                 dur="4s" 
+                 repeatCount="indefinite" />
+      </stop>
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="url(#purpleGradient)" />
+  
+  <!-- Pulse effect -->
+  <circle cx="639" cy="360" r="300" fill="url(#pulseGradient)">
+    <animate attributeName="r" 
+             values="280; 320; 280" 
+             dur="4s" 
+             repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Floating particles -->
+  <g id="particles">
+    <circle cx="400" cy="250" r="5" fill="#8A2BE2" opacity="0.5">
+      <animate attributeName="cy" 
+               values="250; 240; 260; 250" 
+               dur="8s" 
+               repeatCount="indefinite" />
+      <animate attributeName="opacity" 
+               values="0.5; 0.8; 0.3; 0.5" 
+               dur="6s" 
+               repeatCount="indefinite" />
+    </circle>
+    <circle cx="750" cy="350" r="3" fill="#9370DB" opacity="0.6">
+      <animate attributeName="cy" 
+               values="350; 335; 360; 350" 
+               dur="7s" 
+               repeatCount="indefinite" />
+      <animate attributeName="opacity" 
+               values="0.6; 0.9; 0.4; 0.6" 
+               dur="5s" 
+               repeatCount="indefinite" />
+    </circle>
+    <circle cx="550" cy="450" r="4" fill="#5D3FD3" opacity="0.5">
+      <animate attributeName="cy" 
+               values="450; 435; 460; 450" 
+               dur="9s" 
+               repeatCount="indefinite" />
+      <animate attributeName="opacity" 
+               values="0.5; 0.7; 0.3; 0.5" 
+               dur="7s" 
+               repeatCount="indefinite" />
+    </circle>
+    <circle cx="900" cy="300" r="6" fill="#B19CD9" opacity="0.4">
+      <animate attributeName="cy" 
+               values="300; 285; 310; 300" 
+               dur="10s" 
+               repeatCount="indefinite" />
+      <animate attributeName="opacity" 
+               values="0.4; 0.7; 0.2; 0.4" 
+               dur="8s" 
+               repeatCount="indefinite" />
+    </circle>
+    
+    <!-- Additional particles for more interest -->
+    <circle cx="300" cy="500" r="4" fill="#A98CEF" opacity="0.5">
+      <animate attributeName="cy" 
+               values="500; 485; 510; 500" 
+               dur="9.5s" 
+               repeatCount="indefinite" />
+      <animate attributeName="opacity" 
+               values="0.5; 0.8; 0.3; 0.5" 
+               dur="7.5s" 
+               repeatCount="indefinite" />
+    </circle>
+    <circle cx="1000" cy="200" r="5" fill="#7B68EE" opacity="0.4">
+      <animate attributeName="cy" 
+               values="200; 185; 210; 200" 
+               dur="8.5s" 
+               repeatCount="indefinite" />
+      <animate attributeName="opacity" 
+               values="0.4; 0.7; 0.2; 0.4" 
+               dur="6.5s" 
+               repeatCount="indefinite" />
+    </circle>
+  </g>
+  
+  <!-- Text glow -->
+  <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+    <feGaussianBlur stdDeviation="10" result="blur" />
+    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+  </filter>
+  
+  <!-- Text with glow -->
+  <g filter="url(#glow)">
+    <text x="639" y="360" font-family="Arial, sans-serif" font-size="72" font-weight="bold" text-anchor="middle" alignment-baseline="middle" fill="#fff">
+      Stream has ended
+      <animate attributeName="opacity" 
+               values="0.8; 1; 0.8" 
+               dur="3s" 
+               repeatCount="indefinite" />
+    </text>
+  </g>
+  
+  <!-- Text shadow for depth -->
+  <text x="642" y="363" font-family="Arial, sans-serif" font-size="72" font-weight="bold" text-anchor="middle" alignment-baseline="middle" fill="rgba(147, 112, 219, 0.5)">
+    Stream has ended
+    <animate attributeName="opacity" 
+             values="0.5; 0.7; 0.5" 
+             dur="3s" 
+             repeatCount="indefinite" />
+  </text>
+</svg>

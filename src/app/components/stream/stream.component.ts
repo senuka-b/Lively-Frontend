@@ -31,6 +31,7 @@ export class StreamComponent {
   streamTitle: string = '';
   currentMessage: string = '';
   chatMessages: any = [];
+  hasEnded: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -118,7 +119,14 @@ export class StreamComponent {
         this.viewers = 24;
         this.likes = 15;
 
+        this.signalService.listenForStreamEnd(this.streamId).subscribe(() => {
+          console.log('Stream has ended');
+          this.hasEnded = true;
 
+          this.videoPlayer.nativeElement.srcObject = null;
+          this.videoPlayer.nativeElement.src =
+            'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+        });
       },
       (error) => {
         console.error('Error loading stream info:', error);
