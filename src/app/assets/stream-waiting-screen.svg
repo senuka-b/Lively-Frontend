@@ -54,7 +54,7 @@
     
     <!-- Text elements -->
     <text x="0" y="110" fill="#ffffff" font-family="Arial, sans-serif" font-size="36" font-weight="bold">
-      Waiting till you join the stream
+      The stream is rolling ⚽!
     </text>
     <text x="0" y="150" fill="#ffffff" font-family="Arial, sans-serif" font-size="36" font-weight="bold">
       <tspan class="dot1">.</tspan><tspan class="dot2">.</tspan><tspan class="dot3">.</tspan>

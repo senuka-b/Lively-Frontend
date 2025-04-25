@@ -18,6 +18,7 @@
     "@angular/platform-browser": "^19.1.0",
     "@angular/platform-browser-dynamic": "^19.1.0",
     "@angular/router": "^19.1.0",
+    "@auth0/angular-jwt": "^5.2.0",
     "@stomp/stompjs": "^7.1.1",
     "@tailwindcss/postcss": "^4.1.4",
     "postcss": "^8.5.3",
