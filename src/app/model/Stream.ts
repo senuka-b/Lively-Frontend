@@ -4,6 +4,6 @@ export type Stream = {
   id?: number;
   owner: User;
   code: string;
-  title: String;
+  title: string;
   description: string;
 };

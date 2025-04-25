@@ -176,4 +176,33 @@ export class SignalService {
       );
     });
   }
+
+  sendChatMessage(sender:string, senderGuestName:string,  streamCode: string, message: string): void {
+    this.stompClient?.publish({
+      destination: `/socket/stream/${streamCode}/chat`,
+      body: JSON.stringify({
+        sender,
+        senderGuestName,
+        message
+      }),
+    });
+  }
+
+  listenForChatMessages(streamCode: string): Observable<any> {
+    return new Observable((observer) => {
+      this.stompClient?.subscribe(
+        `/topic/stream/${streamCode}/chat`,
+        (message) => {
+          try {
+            const chatMessage = JSON.parse(message.body);
+            console.log('Received chat message:', chatMessage);
+            observer.next(chatMessage);
+          } catch (error) {
+            console.error('Error parsing chat message:', error);
+          }
+        }
+      );
+    });
+  } 
+
 }

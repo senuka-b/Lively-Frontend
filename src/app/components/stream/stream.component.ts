@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SignalService } from '../../service/signal/signal.service';
 import { WebrtcService } from '../../service/webrtc/webrtc.service';
+import { StreamInfoService } from '../../service/streamInfo/stream-info.service';
 
 @Component({
   selector: 'app-stream',
@@ -15,6 +16,9 @@ import { WebrtcService } from '../../service/webrtc/webrtc.service';
 export class StreamComponent {
   @ViewChild('videoPlayer', { static: false })
   videoPlayer!: ElementRef<HTMLVideoElement>;
+
+  @ViewChild('chatContainer', { static: false })
+  chatContainer!: ElementRef<HTMLDivElement>;
 
   streamId: string = '';
   uniqueId: string = crypto.randomUUID();
@@ -32,7 +36,8 @@ export class StreamComponent {
     private route: ActivatedRoute,
     private router: Router,
     private signalService: SignalService,
-    private webRtcService: WebrtcService
+    private webRtcService: WebrtcService,
+    private streamService: StreamInfoService
   ) {}
 
   ngOnInit(): void {
@@ -85,15 +90,40 @@ export class StreamComponent {
         isCurrentUser: false,
       });
 
+      this.signalService
+        .listenForChatMessages(this.streamId)
+        .subscribe((chatMessage) => {
+          if (chatMessage.sender === this.uniqueId) return;
+
+          this.chatMessages.push({
+            username: chatMessage.senderGuestName,
+            message: chatMessage.message,
+            timestamp: new Date(),
+            isCurrentUser: false,
+          });
+          this.scrollChatToBottom();
+        });
+
       this.scrollChatToBottom();
     }
   }
 
   loadStreamInfo(): void {
-    this.streamerName = 'SenukaStreamer';
-    this.streamTitle = 'Live Coding Session - Building a Streaming App';
-    this.viewers = 24;
-    this.likes = 15;
+    this.streamService.getStreamInfo(this.streamId).subscribe(
+      (response) => {
+        console.log('Stream info:', response);
+        this.streamerName = response.owner.username;
+        this.streamTitle = response.title;
+
+        this.viewers = 24;
+        this.likes = 15;
+
+
+      },
+      (error) => {
+        console.error('Error loading stream info:', error);
+      }
+    );
 
     // Mock chat messages
     this.chatMessages = [
@@ -120,37 +150,51 @@ export class StreamComponent {
   }
 
   sendMessage(): void {
-    // if (this.currentMessage.trim() && this.hasJoined) {
-    //   const newMessage: ChatMessage = {
-    //     username: this.guestName,
-    //     message: this.currentMessage,
-    //     timestamp: new Date(),
-    //     isCurrentUser: true
-    //   };
-    //   this.chatMessages.push(newMessage);
-    //   this.currentMessage = '';
-    //   this.scrollChatToBottom();
-    //   if (Math.random() > 0.7) {
-    //     setTimeout(() => {
-    //       const responses = [
-    //         'That\'s interesting!',
-    //         'I agree with you.',
-    //         'Nice point!',
-    //         'Thanks for sharing that!',
-    //         '👍',
-    //         '😊'
-    //       ];
-    //       const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-    //       this.chatMessages.push({
-    //         username: this.streamerName,
-    //         message: randomResponse,
-    //         timestamp: new Date(),
-    //         isCurrentUser: false
-    //       });
-    //       this.scrollChatToBottom();
-    //     }, 2000 + Math.random() * 3000);
-    //   }
-    // }
+    if (this.currentMessage.trim() && this.hasJoined) {
+      const newMessage = {
+        username: this.guestName,
+        message: this.currentMessage,
+        timestamp: new Date(),
+        isCurrentUser: true,
+      };
+
+      this.signalService.sendChatMessage(
+        this.uniqueId,
+        this.guestName,
+        this.streamId,
+        this.currentMessage
+      );
+
+      this.chatMessages.push(newMessage);
+      this.currentMessage = '';
+
+      this.scrollChatToBottom();
+
+      // Message Simulation
+      if (Math.random() > 0.7) {
+        setTimeout(() => {
+          const responses = [
+            "That's interesting!",
+            'I agree with you.',
+            'Nice point!',
+            'Thanks for sharing that!',
+            '👍',
+            '😊',
+          ];
+
+          const randomResponse =
+            responses[Math.floor(Math.random() * responses.length)];
+
+          this.chatMessages.push({
+            username: this.streamerName,
+            message: randomResponse,
+            timestamp: new Date(),
+            isCurrentUser: false,
+          });
+          this.scrollChatToBottom();
+        }, 2000 + Math.random() * 3000);
+      }
+    }
   }
 
   likeStream(): void {
@@ -158,12 +202,12 @@ export class StreamComponent {
   }
 
   scrollChatToBottom(): void {
-    // setTimeout(() => {
-    //   if (this.chatContainer) {
-    //     this.chatContainer.nativeElement.scrollTop =
-    //       this.chatContainer.nativeElement.scrollHeight;
-    //   }
-    // }, 100);
+    setTimeout(() => {
+      if (this.chatContainer) {
+        this.chatContainer.nativeElement.scrollTop =
+          this.chatContainer.nativeElement.scrollHeight;
+      }
+    }, 100);
   }
 
   formatTime(date: Date): string {
