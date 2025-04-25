@@ -48,6 +48,7 @@ export class SignalService {
     };
 
     this.stompClient.activate();
+    
   }
 
   private ensureConnectedAndSend(destination: string, body: string): void {
@@ -138,6 +139,13 @@ export class SignalService {
     return this.http.post<Stream>(this.baseUrl + '/api/streams', stream, {
       headers: this.headers,
       observe: 'response',
+    });
+  }
+
+  deleteStream(streamCode: string): Observable<void> {
+    console.log(`Deleting stream with code: ${streamCode}`);
+    return this.http.delete<void>(`${this.baseUrl}/api/streams/${streamCode}`, {
+      headers: this.headers,
     });
   }
 

@@ -4,6 +4,7 @@ import { TokenStorageService } from '../token-storage/token-storage.service';
 import { Observable } from 'rxjs';
 import { AuthResponse } from '../../model/AuthResponse';
 import {jwtDecode} from 'jwt-decode';
+import { User } from '../../model/User';
 
 
 @Injectable({
@@ -54,5 +55,9 @@ export class AuthenticationService {
 
     return this.isTokenValid();
 
+  }
+
+  signup(user: User): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, user);
   }
 }

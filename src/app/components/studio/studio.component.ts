@@ -7,6 +7,8 @@ import { SignalService } from '../../service/signal/signal.service';
 import { User } from '../../model/User';
 import { Stream } from '../../model/Stream';
 import { HttpStatusCode } from '@angular/common/http';
+import { AuthenticationService } from '../../service/authentication/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-studio',
@@ -42,11 +44,18 @@ export class StudioComponent {
 
   constructor(
     private webrtcService: WebrtcService,
-    private signalService: SignalService
+    private signalService: SignalService,
+    private authService: AuthenticationService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     // Initialize component
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 
   ngOnDestroy(): void {
@@ -61,7 +70,6 @@ export class StudioComponent {
     if (!this.isLive) {
       this.isLive = true;
       console.log('Attempting to start stream with code:', this.streamCode);
-
 
       this.signalService
         .createStream({
@@ -127,6 +135,19 @@ export class StudioComponent {
         this.localVideo.nativeElement.srcObject = null;
       });
 
+      this.signalService
+        .deleteStream(this.streamCode)
+        .pipe(
+          catchError((error) => {
+            console.error('Failed to end stream:', error);
+            return throwError(() => error);
+          })
+        )
+        .subscribe(() => {
+          console.log('Stream ended on server');
+          alert('Stream ended successfully!');
+        });
+        
       this.stopTimers();
       this.resetStats();
     }
