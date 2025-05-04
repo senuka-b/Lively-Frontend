@@ -14,7 +14,7 @@ export class JwtInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const currentUserToken = this.tokenStorageService.getToken();
 
-    if (req.url.includes('/api/auth/login') || req.url.includes('/api/auth/signup')) {
+    if (req.url.includes('/api/auth/login') || req.url.includes('/api/auth/register')) {
       return next.handle(req); // Bypass interceptor
     }
 
@@ -27,7 +27,7 @@ export class JwtInterceptorService implements HttpInterceptor {
         setHeaders: {
           Authorization: `Bearer ${currentUserToken}`,
         },
-      });
+      });git
     } else {
     
       console.log('No token found, redirecting to login...');
