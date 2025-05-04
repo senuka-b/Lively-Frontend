@@ -27,7 +27,7 @@ export class JwtInterceptorService implements HttpInterceptor {
         setHeaders: {
           Authorization: `Bearer ${currentUserToken}`,
         },
-      });git
+      });
     } else {
     
       console.log('No token found, redirecting to login...');
