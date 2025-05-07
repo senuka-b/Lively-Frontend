@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { StreamInfoService } from './stream-info.service';
+import { StreamService } from './stream.service';
 
-describe('StreamInfoService', () => {
-  let service: StreamInfoService;
+describe('StreamService', () => {
+  let service: StreamService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(StreamInfoService);
+    service = TestBed.inject(StreamService);
   });
 
   it('should be created', () => {
