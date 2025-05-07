@@ -14,6 +14,12 @@ export class StreamService {
 
   constructor(private http: HttpClient, private websocketService: WebsocketService) { }
 
+  public getStream(streamCode: string): Observable<Stream> {
+    console.log("Fetching stream:", streamCode);
+    return this.http.get<Stream>(`${this.baseUrl}/streams/${streamCode}`);
+    
+  }
+
   public createStream(stream: Stream): Observable<Stream> {
     console.log('Creating stream:', stream);
     return this.http.post<Stream>(`${this.baseUrl}/streams`, stream);
