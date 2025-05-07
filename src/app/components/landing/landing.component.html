@@ -1,137 +1,1337 @@
-<!-- landing.component.html -->
-<div class="min-h-screen bg-[#0a0118] text-white">
-  <!-- Hero Section -->
-  <div class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-br from-purple-900/80 via-[#150b30] to-[#1e0c3a] z-0"></div>
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="pt-20 pb-32 lg:pt-32">
-        <div class="text-center">
-          <h1 class="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-purple-300 via-fuchsia-300 to-cyan-300 text-transparent bg-clip-text">
-            Share Your Tech Events Live
-          </h1>
-          <p class="text-xl md:text-2xl text-purple-200 mb-8 max-w-3xl mx-auto">
-            Stream your tech conferences and meetups instantly. No downloads, no setup - just share a link and go live.
-          </p>
-          <div class="flex flex-col sm:flex-row gap-4 justify-center">
-            <button class="px-8 py-4 bg-gradient-to-r from-purple-600 to-fuchsia-600 rounded-lg font-semibold text-lg hover:from-purple-700 hover:to-fuchsia-700 transition-all duration-300 shadow-lg hover:shadow-purple-500/25">
-              Start Streaming
-            </button>
-            <button class="px-8 py-4 bg-gray-900/50 border border-purple-500/30 rounded-lg font-semibold text-lg hover:bg-gray-900/70 transition-all duration-300">
-              Watch Demo
-            </button>
-          </div>
-        </div>
+<div
+  class="min-h-screen bg-gradient-to-br from-indigo-900 to-purple-900 font-sans"
+>
+  <!-- Navigation -->
+  <nav class="container mx-auto px-6 py-4">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center">
+        <span class="text-white font-bold text-2xl">Lively</span>
+      </div>
+      <div class="hidden md:flex items-center space-x-8">
+        <a href="#features" class="text-purple-100 hover:text-white transition"
+          >Features</a
+        >
+        <a
+          href="#how-it-works"
+          class="text-purple-100 hover:text-white transition"
+          >How It Works</a
+        >
+        <a
+          href="#testimonials"
+          class="text-purple-100 hover:text-white transition"
+          >Testimonials</a
+        >
+        <a href="#pricing" class="text-purple-100 hover:text-white transition"
+          >Pricing</a
+        >
+      </div>
+      <div>
+        <button
+        (click)="signup()"
+          class="bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-6 rounded-full shadow-lg transition"
+        >
+          Sign Up
+        </button>
       </div>
     </div>
-  </div>
+  </nav>
+
+  <!-- Main Section -->
+  <section
+    class="container mx-auto px-6 py-16 md:py-24 flex flex-col md:flex-row items-center"
+  >
+    <div class="md:w-1/2 flex flex-col items-start">
+      <h1
+        class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
+      >
+        Share Your Stream <br />
+        <span class="text-purple-300">With Anyone, Anywhere</span>
+      </h1>
+      <p class="text-lg text-purple-100 mb-8">
+        Create shareable links in seconds. Let your audience view your
+        livestream from any browser - no login required. Perfect for
+        presentations, conferences, meetups, and more.
+      </p>
+      <div
+        class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 w-full sm:w-auto"
+      >
+        <button
+        (click)="login()"
+          class="bg-white text-purple-800 font-bold py-3 px-8 rounded-full shadow-lg hover:bg-purple-100 transition"
+        >
+          Get Started
+        </button>
+
+      </div>
+    </div>
+    <div class="md:w-1/2 mt-12 md:mt-0">
+      <div class="relative">
+        <div
+          class="absolute inset-0 bg-purple-500 rounded-lg opacity-20 blur-2xl transform -rotate-6"
+        ></div>
+        <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <!-- Gradients -->
+            <linearGradient
+              id="purpleGradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="100%"
+            >
+              <stop offset="0%" stop-color="#6d28d9" />
+              <stop offset="100%" stop-color="#4c1d95" />
+            </linearGradient>
+            <linearGradient
+              id="buttonGradient"
+              x1="0%"
+              y1="0%"
+              x2="100%"
+              y2="0%"
+            >
+              <stop offset="0%" stop-color="#8b5cf6" />
+              <stop offset="100%" stop-color="#6d28d9" />
+            </linearGradient>
+
+            <!-- Patterns -->
+            <pattern
+              id="gridPattern"
+              width="20"
+              height="20"
+              patternUnits="userSpaceOnUse"
+            >
+              <path
+                d="M 20 0 L 0 0 0 20"
+                fill="none"
+                stroke="#8b5cf6"
+                stroke-opacity="0.1"
+                stroke-width="1"
+              />
+            </pattern>
+
+            <!-- Filters -->
+            <filter
+              id="dropShadow"
+              x="-20%"
+              y="-20%"
+              width="140%"
+              height="140%"
+            >
+              <feDropShadow
+                dx="0"
+                dy="4"
+                stdDeviation="10"
+                flood-opacity="0.3"
+                flood-color="#000"
+              />
+            </filter>
+
+            <!-- Animation definitions -->
+            <clipPath id="videoClip">
+              <rect x="100" y="135" width="350" height="200" rx="6" />
+            </clipPath>
+
+            <!-- Animated confetti -->
+            <filter id="blurMe">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+            </filter>
+          </defs>
+
+          <!-- Background -->
+          <rect width="800" height="500" fill="url(#gridPattern)" />
+
+          <!-- Device - Laptop -->
+          <g filter="url(#dropShadow)">
+            <!-- Laptop Base -->
+            <path
+              d="M 50 350 L 550 350 C 560 350, 570 360, 570 370 L 570 390 C 570 400, 560 410, 550 410 L 50 410 C 40 410, 30 400, 30 390 L 30 370 C 30 360, 40 350, 50 350 Z"
+              fill="#1f2937"
+            />
+
+            <!-- Laptop Screen -->
+            <rect
+              x="80"
+              y="100"
+              width="390"
+              height="250"
+              rx="10"
+              fill="#1f2937"
+            />
+            <rect
+              x="90"
+              y="110"
+              width="370"
+              height="230"
+              rx="6"
+              fill="#0f172a"
+            />
+
+            <!-- Screen Content -->
+            <rect
+              x="100"
+              y="120"
+              width="350"
+              height="210"
+              rx="2"
+              fill="#f1f5f9"
+            />
+
+            <!-- Laptop Interface -->
+            <rect
+              x="100"
+              y="120"
+              width="350"
+              height="15"
+              rx="2"
+              fill="#6d28d9"
+            />
+            <circle cx="107" cy="127.5" r="2.5" fill="#ef4444" />
+            <circle cx="117" cy="127.5" r="2.5" fill="#eab308" />
+            <circle cx="127" cy="127.5" r="2.5" fill="#22c55e" />
+
+            <!-- Video Player -->
+            <g clip-path="url(#videoClip)">
+              <!-- Video Background -->
+              <rect x="100" y="135" width="350" height="200" fill="#0f172a" />
+
+              <!-- Animated Presenter -->
+              <g id="presenter">
+                <rect
+                  x="110"
+                  y="155"
+                  width="330"
+                  height="160"
+                  rx="4"
+                  fill="#374151"
+                >
+                  <animate
+                    attributeName="opacity"
+                    values="1;0.95;1"
+                    dur="4s"
+                    repeatCount="indefinite"
+                  />
+                </rect>
+
+                <!-- Person Silhouette -->
+                <ellipse cx="275" cy="195" rx="30" ry="35" fill="#9ca3af" />
+                <rect
+                  x="245"
+                  y="230"
+                  width="60"
+                  height="70"
+                  rx="5"
+                  fill="#9ca3af"
+                />
+
+                <!-- Hand Animation -->
+                <rect
+                  x="305"
+                  y="230"
+                  width="20"
+                  height="40"
+                  rx="5"
+                  fill="#9ca3af"
+                >
+                  <animate
+                    attributeName="transform"
+                    type="rotate"
+                    values="0 305 230; 20 305 230; 0 305 230"
+                    dur="3s"
+                    repeatCount="indefinite"
+                  />
+                </rect>
+              </g>
+
+              <!-- Lively Interface Elements -->
+              <rect
+                x="150"
+                y="155"
+                width="50"
+                height="25"
+                rx="4"
+                fill="url(#buttonGradient)"
+                opacity="0.8"
+              />
+              <text
+                x="160"
+                y="172"
+                font-family="Arial"
+                font-size="12"
+                fill="white"
+              >
+                LIVE
+              </text>
+
+              <!-- View Count -->
+              <rect
+                x="330"
+                y="155"
+                width="90"
+                height="25"
+                rx="4"
+                fill="#1f2937"
+                opacity="0.8"
+              />
+              <text
+                x="345"
+                y="172"
+                font-family="Arial"
+                font-size="12"
+                fill="white"
+              >
+                <tspan>👁️</tspan>
+                <tspan id="viewerCount">120</tspan>
+                <animate
+                  xlink:href="#viewerCount"
+                  attributeName="textContent"
+                  values="120;124;128;135;140;145"
+                  dur="10s"
+                  repeatCount="indefinite"
+                />
+              </text>
+
+              <!-- Chat Messages (Animated) -->
+              <g id="chatMessages">
+                <rect
+                  id="msg1"
+                  x="110"
+                  y="285"
+                  width="150"
+                  height="20"
+                  rx="10"
+                  fill="#4c1d95"
+                  opacity="0.8"
+                >
+                  <animate
+                    attributeName="opacity"
+                    values="0;0.8;0.8;0.8;0"
+                    dur="5s"
+                    begin="0s"
+                    repeatCount="indefinite"
+                  />
+                </rect>
+                <text
+                  x="125"
+                  y="300"
+                  font-family="Arial"
+                  font-size="10"
+                  fill="white"
+                  opacity="0.8"
+                >
+                  <animate
+                    attributeName="opacity"
+                    values="0;1;1;1;0"
+                    dur="5s"
+                    begin="0s"
+                    repeatCount="indefinite"
+                  />
+                  Great presentation!
+                </text>
+
+                <rect
+                  id="msg2"
+                  x="110"
+                  y="310"
+                  width="180"
+                  height="20"
+                  rx="10"
+                  fill="#4c1d95"
+                  opacity="0"
+                >
+                  <animate
+                    attributeName="opacity"
+                    values="0;0.8;0.8;0.8;0"
+                    dur="5s"
+                    begin="2s"
+                    repeatCount="indefinite"
+                  />
+                </rect>
+                <text
+                  x="125"
+                  y="325"
+                  font-family="Arial"
+                  font-size="10"
+                  fill="white"
+                  opacity="0"
+                >
+                  <animate
+                    attributeName="opacity"
+                    values="0;1;1;1;0"
+                    dur="5s"
+                    begin="2s"
+                    repeatCount="indefinite"
+                  />
+                  Can you explain that again?
+                </text>
+              </g>
+            </g>
+          </g>
+
+          <!-- QR Code / Shareable Link -->
+          <g transform="translate(560, 180)">
+            <!-- Phone displaying stream -->
+            <rect
+              x="0"
+              y="0"
+              width="170"
+              height="300"
+              rx="15"
+              fill="#1e1b4b"
+              filter="url(#dropShadow)"
+            />
+            <rect
+              x="10"
+              y="10"
+              width="150"
+              height="280"
+              rx="5"
+              fill="#0f172a"
+            />
+            <rect
+              x="15"
+              y="15"
+              width="140"
+              height="270"
+              rx="3"
+              fill="#f1f5f9"
+            />
+
+            <!-- Phone Screen Content - Mini Stream -->
+            <rect x="20" y="20" width="130" height="70" rx="3" fill="#0f172a" />
+            <rect x="30" y="30" width="110" height="50" rx="2" fill="#374151" />
+
+            <!-- Miniature Presenter -->
+            <ellipse cx="75" cy="45" rx="10" ry="12" fill="#9ca3af" />
+            <rect x="65" y="55" width="20" height="20" rx="2" fill="#9ca3af" />
+
+            <!-- Phone Stream Info -->
+            <rect
+              x="20"
+              y="100"
+              width="130"
+              height="20"
+              rx="3"
+              fill="#6d28d9"
+            />
+            <text
+              x="60"
+              y="115"
+              font-family="Arial"
+              font-size="12"
+              fill="white"
+              text-anchor="middle"
+            >
+              LIVE
+            </text>
+
+            <!-- QR Code -->
+            <rect x="35" y="135" width="100" height="100" fill="white" />
+            <!-- Simple QR Code Pattern -->
+            <g fill="#4c1d95">
+              <rect x="45" y="145" width="10" height="10" />
+              <rect x="65" y="145" width="10" height="10" />
+              <rect x="85" y="145" width="10" height="10" />
+              <rect x="115" y="145" width="10" height="10" />
+
+              <rect x="45" y="165" width="10" height="10" />
+              <rect x="75" y="165" width="20" height="10" />
+              <rect x="105" y="165" width="20" height="10" />
+
+              <rect x="45" y="185" width="30" height="10" />
+              <rect x="85" y="185" width="10" height="10" />
+              <rect x="105" y="185" width="10" height="10" />
+
+              <rect x="45" y="205" width="10" height="10" />
+              <rect x="65" y="205" width="10" height="10" />
+              <rect x="85" y="205" width="10" height="10" />
+              <rect x="105" y="205" width="10" height="10" />
+              <rect x="115" y="205" width="10" height="10" />
+            </g>
+
+            <!-- Share Link Text -->
+            <text
+              x="85"
+              y="255"
+              font-family="Arial"
+              font-size="12"
+              fill="#4c1d95"
+              text-anchor="middle"
+              font-weight="bold"
+            >
+              lively.com/watch/🎉
+            </text>
+
+            <!-- Scanning Animation -->
+            <rect
+              x="35"
+              y="135"
+              width="100"
+              height="2"
+              fill="#8b5cf6"
+              opacity="0.7"
+            >
+              <animate
+                attributeName="y"
+                values="135;235;135"
+                dur="4s"
+                repeatCount="indefinite"
+              />
+            </rect>
+          </g>
+
+          <!-- Connection Lines Animation -->
+          <g
+            stroke="#8b5cf6"
+            stroke-width="2"
+            stroke-dasharray="5,5"
+            opacity="0.6"
+          >
+            <line x1="450" y1="230" x2="560" y2="180">
+              <animate
+                attributeName="stroke-dashoffset"
+                values="0;-20"
+                dur="1s"
+                repeatCount="indefinite"
+              />
+            </line>
+          </g>
+
+          <!-- Floating People Icons (Audience) -->
+          <g id="audience">
+            <!-- Person 1 -->
+            <g transform="translate(600, 80)" opacity="0.8">
+              <circle cx="0" cy="0" r="15" fill="#8b5cf6" />
+              <circle cx="0" cy="-7" r="6" fill="#f1f5f9" />
+              <path
+                d="M -8,5 Q 0,15 8,5"
+                stroke="#f1f5f9"
+                stroke-width="2"
+                fill="none"
+              />
+              <animate
+                attributeName="transform"
+                values="translate(600, 80); translate(605, 75); translate(600, 80)"
+                dur="3s"
+                repeatCount="indefinite"
+              />
+            </g>
+
+            <!-- Person 2 -->
+            <g transform="translate(630, 110)" opacity="0.8">
+              <circle cx="0" cy="0" r="15" fill="#8b5cf6" />
+              <circle cx="0" cy="-7" r="6" fill="#f1f5f9" />
+              <path
+                d="M -8,5 Q 0,15 8,5"
+                stroke="#f1f5f9"
+                stroke-width="2"
+                fill="none"
+              />
+              <animate
+                attributeName="transform"
+                values="translate(630, 110); translate(625, 105); translate(630, 110)"
+                dur="4s"
+                repeatCount="indefinite"
+              />
+            </g>
+
+            <!-- Person 3 -->
+            <g transform="translate(660, 90)" opacity="0.8">
+              <circle cx="0" cy="0" r="15" fill="#8b5cf6" />
+              <circle cx="0" cy="-7" r="6" fill="#f1f5f9" />
+              <path
+                d="M -8,5 Q 0,15 8,5"
+                stroke="#f1f5f9"
+                stroke-width="2"
+                fill="none"
+              />
+              <animate
+                attributeName="transform"
+                values="translate(660, 90); translate(665, 95); translate(660, 90)"
+                dur="5s"
+                repeatCount="indefinite"
+              />
+            </g>
+          </g>
+
+          <!-- Connection Lines to Audience -->
+          <g
+            stroke="#8b5cf6"
+            stroke-width="1"
+            stroke-dasharray="3,3"
+            opacity="0.4"
+          >
+            <line x1="560" y1="180" x2="600" y2="80">
+              <animate
+                attributeName="stroke-dashoffset"
+                values="0;-12"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+            </line>
+            <line x1="560" y1="180" x2="630" y2="110">
+              <animate
+                attributeName="stroke-dashoffset"
+                values="0;-12"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+            </line>
+            <line x1="560" y1="180" x2="660" y2="90">
+              <animate
+                attributeName="stroke-dashoffset"
+                values="0;-12"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+            </line>
+          </g>
+
+          <!-- Animated confetti particles for excitement -->
+          <g filter="url(#blurMe)">
+            <circle cx="640" cy="50" r="3" fill="#8b5cf6">
+              <animate
+                attributeName="cy"
+                values="50;70;50"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="opacity"
+                values="0.8;0.4;0.8"
+                dur="2s"
+                repeatCount="indefinite"
+              />
+            </circle>
+            <circle cx="620" cy="40" r="2" fill="#c4b5fd">
+              <animate
+                attributeName="cy"
+                values="40;60;40"
+                dur="3s"
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="opacity"
+                values="0.7;0.3;0.7"
+                dur="3s"
+                repeatCount="indefinite"
+              />
+            </circle>
+            <circle cx="660" cy="45" r="2" fill="#ddd6fe">
+              <animate
+                attributeName="cy"
+                values="45;65;45"
+                dur="4s"
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="opacity"
+                values="0.6;0.2;0.6"
+                dur="4s"
+                repeatCount="indefinite"
+              />
+            </circle>
+            <circle cx="680" cy="65" r="3" fill="#8b5cf6">
+              <animate
+                attributeName="cy"
+                values="65;85;65"
+                dur="3.5s"
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="opacity"
+                values="0.7;0.3;0.7"
+                dur="3.5s"
+                repeatCount="indefinite"
+              />
+            </circle>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
 
   <!-- Features Section -->
-  <div class="py-24 bg-black/30">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-3xl md:text-4xl font-bold mb-4 bg-gradient-to-r from-purple-300 to-cyan-300 text-transparent bg-clip-text">
-          Perfect for Tech Events
-        </h2>
-        <p class="text-purple-200 text-lg">Everything you need to stream your tech conferences and meetups</p>
-      </div>
+  <section id="features" class="bg-purple-900 bg-opacity-70 py-20">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-16">
+        Why Choose Lively?
+      </h2>
 
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-gray-900/30 p-6 rounded-xl border border-purple-900/30 hover:border-purple-500/30 transition-all duration-300">
-          <div class="h-12 w-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4">
-            <span class="text-2xl">🎥</span>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <!-- Feature 1 -->
+        <div
+          class="bg-purple-800 bg-opacity-50 rounded-xl p-8 shadow-lg transform hover:-translate-y-2 transition duration-300"
+        >
+          <div
+            class="bg-purple-600 rounded-full w-16 h-16 flex items-center justify-center mb-6"
+          >
+            <svg
+              class="w-8 h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+              ></path>
+            </svg>
           </div>
-          <h3 class="text-xl font-semibold mb-2 text-purple-200">One-Click Streaming</h3>
-          <p class="text-purple-300/70">Start streaming your presentation or webcam with a single click. No complex setup required.</p>
+          <h3 class="text-xl font-bold text-white mb-3">Instant Sharing</h3>
+          <p class="text-purple-100">
+            Generate shareable links with one click. No complicated setup or
+            technical knowledge required.
+          </p>
         </div>
 
-        <div class="bg-gray-900/30 p-6 rounded-xl border border-purple-900/30 hover:border-purple-500/30 transition-all duration-300">
-          <div class="h-12 w-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4">
-            <span class="text-2xl">🔗</span>
+        <!-- Feature 2 -->
+        <div
+          class="bg-purple-800 bg-opacity-50 rounded-xl p-8 shadow-lg transform hover:-translate-y-2 transition duration-300"
+        >
+          <div
+            class="bg-purple-600 rounded-full w-16 h-16 flex items-center justify-center mb-6"
+          >
+            <svg
+              class="w-8 h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+              ></path>
+            </svg>
           </div>
-          <h3 class="text-xl font-semibold mb-2 text-purple-200">Instant Sharing</h3>
-          <p class="text-purple-300/70">Generate a shareable link instantly. Your audience can join with just one click.</p>
+          <h3 class="text-xl font-bold text-white mb-3">No Login Required</h3>
+          <p class="text-purple-100">
+            Viewers can watch your stream with just a link. No accounts, no
+            downloads, no barriers.
+          </p>
         </div>
 
-        <div class="bg-gray-900/30 p-6 rounded-xl border border-purple-900/30 hover:border-purple-500/30 transition-all duration-300">
-          <div class="h-12 w-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4">
-            <span class="text-2xl">💻</span>
+        <!-- Feature 3 -->
+        <div
+          class="bg-purple-800 bg-opacity-50 rounded-xl p-8 shadow-lg transform hover:-translate-y-2 transition duration-300"
+        >
+          <div
+            class="bg-purple-600 rounded-full w-16 h-16 flex items-center justify-center mb-6"
+          >
+            <svg
+              class="w-8 h-8 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"
+              ></path>
+            </svg>
           </div>
-          <h3 class="text-xl font-semibold mb-2 text-purple-200">Screen Sharing</h3>
-          <p class="text-purple-300/70">Share your screen for technical demonstrations and presentations with crystal clarity.</p>
+          <h3 class="text-xl font-bold text-white mb-3">
+            Crystal Clear Quality
+          </h3>
+          <p class="text-purple-100">
+            Enjoy high-definition streaming with smart bandwidth adaptation for
+            any internet connection.
+          </p>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Use Cases Section -->
-  <div class="py-24">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 class="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-purple-300 to-cyan-300 text-transparent bg-clip-text">
-            Made for Tech Communities
-          </h2>
-          <div class="space-y-6">
-            <div class="flex items-start gap-4">
-              <div class="h-8 w-8 bg-purple-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                <span class="text-xl">🎯</span>
-              </div>
-              <div>
-                <h3 class="text-xl font-semibold mb-2 text-purple-200">Tech Conferences</h3>
-                <p class="text-purple-300/70">Stream keynotes and technical sessions to remote attendees with professional quality.</p>
-              </div>
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="py-20">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-16">
+        How It Works
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <!-- Step 1 -->
+        <div class="flex flex-col items-center">
+          <div
+            class="bg-purple-700 rounded-full w-16 h-16 flex items-center justify-center mb-6 shadow-lg"
+          >
+            <span class="text-2xl font-bold text-white">1</span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3 text-center">
+            Create Your Account
+          </h3>
+          <p class="text-purple-100 text-center">
+            Sign up in seconds and get immediate access to all streaming
+            features.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="flex flex-col items-center">
+          <div
+            class="bg-purple-700 rounded-full w-16 h-16 flex items-center justify-center mb-6 shadow-lg"
+          >
+            <span class="text-2xl font-bold text-white">2</span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3 text-center">
+            Start Your Stream
+          </h3>
+          <p class="text-purple-100 text-center">
+            Click "Go Live" and allow camera access. Your personal stream link
+            is generated instantly.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="flex flex-col items-center">
+          <div
+            class="bg-purple-700 rounded-full w-16 h-16 flex items-center justify-center mb-6 shadow-lg"
+          >
+            <span class="text-2xl font-bold text-white">3</span>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3 text-center">
+            Share & Connect
+          </h3>
+          <p class="text-purple-100 text-center">
+            Share your link with your audience. They click and watch - it's that
+            simple!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="bg-purple-900 bg-opacity-70 py-20">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-16">
+        What Our Users Say
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+        <!-- Testimonial 1 -->
+        <div class="bg-purple-800 bg-opacity-40 rounded-xl p-8 shadow-lg">
+          <div class="flex items-center mb-6">
+            <div
+              class="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center mr-4"
+            >
+              <span class="text-xl font-bold text-white">JD</span>
             </div>
-
-            <div class="flex items-start gap-4">
-              <div class="h-8 w-8 bg-purple-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                <span class="text-xl">👥</span>
-              </div>
-              <div>
-                <h3 class="text-xl font-semibold mb-2 text-purple-200">Developer Meetups</h3>
-                <p class="text-purple-300/70">Host virtual coding sessions and tech talks for your developer community.</p>
-              </div>
+            <div>
+              <h4 class="text-lg font-bold text-white">John Doe</h4>
+              <p class="text-purple-200">Tech Conference Organizer</p>
             </div>
+          </div>
+          <p class="text-purple-100 italic">
+            "Lively transformed how we handle our conference presentations. No
+            more technical issues or compatibility problems. Our attendees just
+            click a link and they're in!"
+          </p>
+        </div>
 
-            <div class="flex items-start gap-4">
-              <div class="h-8 w-8 bg-purple-500/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                <span class="text-xl">🚀</span>
-              </div>
-              <div>
-                <h3 class="text-xl font-semibold mb-2 text-purple-200">Product Launches</h3>
-                <p class="text-purple-300/70">Launch your tech product with live demonstrations to a global audience.</p>
-              </div>
+        <!-- Testimonial 2 -->
+        <div class="bg-purple-800 bg-opacity-40 rounded-xl p-8 shadow-lg">
+          <div class="flex items-center mb-6">
+            <div
+              class="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center mr-4"
+            >
+              <span class="text-xl font-bold text-white">M</span>
+            </div>
+            <div>
+              <h4 class="text-lg font-bold text-white">Michael Chen</h4>
+              <p class="text-purple-200">University Professor</p>
+            </div>
+          </div>
+          <p class="text-purple-100 italic">
+            "For remote lectures, Lively has been a game-changer. My students
+            can join from any device, and the quality is consistently excellent.
+            Setup takes seconds!"
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="py-20">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-16">
+        Simple, Transparent Pricing
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Basic Plan -->
+        <div
+          class="bg-purple-800 bg-opacity-30 rounded-xl overflow-hidden shadow-lg transform hover:-translate-y-2 transition duration-300"
+        >
+          <div class="py-8 px-6 bg-purple-800 bg-opacity-50">
+            <h3 class="text-2xl font-bold text-white text-center">Starter</h3>
+            <div class="mt-4 text-center">
+              <span class="text-4xl font-bold text-white">Free</span>
+            </div>
+          </div>
+          <div class="p-8">
+            <ul class="space-y-4">
+              <li class="flex items-center text-purple-100">
+                <svg
+                  class="w-5 h-5 mr-2 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                720p streaming quality
+              </li>
+              <li class="flex items-center text-purple-100">
+                <svg
+                  class="w-5 h-5 mr-2 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                Up to 25 concurrent viewers
+              </li>
+              <li class="flex items-center text-purple-100">
+                <svg
+                  class="w-5 h-5 mr-2 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                2 hours max stream duration
+              </li>
+            </ul>
+            <div class="mt-8">
+              <button
+                class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg w-full shadow-lg transition"
+              >
+                Start Free
+              </button>
             </div>
           </div>
         </div>
 
-        <div class="bg-gradient-to-br from-purple-900/20 to-fuchsia-900/20 p-8 rounded-2xl border border-purple-500/20">
-          <div class="aspect-video bg-black/40 rounded-lg overflow-hidden relative">
-            <div class="absolute inset-0 flex items-center justify-center">
-              <div class="text-center">
-                <div class="h-16 w-16 bg-purple-500/10 rounded-full flex items-center justify-center mb-4 mx-auto">
-                  <span class="text-3xl">▶️</span>
-                </div>
-                <p class="text-purple-200 font-medium">Watch how it works</p>
-              </div>
+        <!-- Pro Plan -->
+        <div
+          class="bg-purple-700 bg-opacity-50 rounded-xl overflow-hidden shadow-lg transform hover:-translate-y-2 transition duration-300 scale-105"
+        >
+          <div class="py-8 px-6 bg-purple-600">
+            <div
+              class="bg-purple-500 text-white text-xs uppercase font-bold rounded-full py-1 px-4 inline-block mb-4"
+            >
+              Most Popular
+            </div>
+            <h3 class="text-2xl font-bold text-white text-center">
+              Professional
+            </h3>
+            <div class="mt-4 text-center">
+              <span class="text-4xl font-bold text-white">$20</span>
+              <span class="text-white">/month</span>
+            </div>
+          </div>
+          <div class="p-8">
+            <ul class="space-y-4">
+              <li class="flex items-center text-purple-100">
+                <svg
+                  class="w-5 h-5 mr-2 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                1080p HD streaming quality
+              </li>
+              <li class="flex items-center text-purple-100">
+                <svg
+                  class="w-5 h-5 mr-2 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                Up to 200 concurrent viewers
+              </li>
+              <li class="flex items-center text-purple-100">
+                <svg
+                  class="w-5 h-5 mr-2 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                Unlimited stream duration
+              </li>
+              <li class="flex items-center text-purple-100">
+                <svg
+                  class="w-5 h-5 mr-2 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                Chat functionality
+              </li>
+            </ul>
+            <div class="mt-8">
+              <button
+                class="bg-white hover:bg-purple-100 text-purple-800 font-bold py-3 px-6 rounded-lg w-full shadow-lg transition"
+              >
+                Get Started
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Enterprise Plan -->
+        <div
+          class="bg-purple-800 bg-opacity-30 rounded-xl overflow-hidden shadow-lg transform hover:-translate-y-2 transition duration-300"
+        >
+          <div class="py-8 px-6 bg-purple-800 bg-opacity-50">
+            <h3 class="text-2xl font-bold text-white text-center">
+              Enterprise
+            </h3>
+            <div class="mt-4 text-center">
+              <span class="text-4xl font-bold text-white">$50</span>
+              <span class="text-white">/month</span>
+            </div>
+          </div>
+          <div class="p-8">
+            <ul class="space-y-4">
+              <li class="flex items-center text-purple-100">
+                <svg
+                  class="w-5 h-5 mr-2 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                4K streaming quality
+              </li>
+              <li class="flex items-center text-purple-100">
+                <svg
+                  class="w-5 h-5 mr-2 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                Unlimited viewers
+              </li>
+              <li class="flex items-center text-purple-100">
+                <svg
+                  class="w-5 h-5 mr-2 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                Unlimited stream duration
+              </li>
+              <li class="flex items-center text-purple-100">
+                <svg
+                  class="w-5 h-5 mr-2 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                Advanced analytics
+              </li>
+              <li class="flex items-center text-purple-100">
+                <svg
+                  class="w-5 h-5 mr-2 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"
+                  ></path>
+                </svg>
+                Priority support
+              </li>
+            </ul>
+            <div class="mt-8">
+              <button
+                class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg w-full shadow-lg transition"
+              >
+                Contact Sales
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
   <!-- CTA Section -->
-  <div class="py-24 bg-gradient-to-b from-transparent to-black/50">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-3xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-purple-300 to-cyan-300 text-transparent bg-clip-text">
-        Ready to Stream Your Tech Event?
-      </h2>
-      <p class="text-xl text-purple-200 mb-8">
-        Join thousands of tech communities already using Lively for their virtual events.
-      </p>
-      <button class="px-8 py-4 bg-gradient-to-r from-purple-600 to-fuchsia-600 rounded-lg font-semibold text-lg hover:from-purple-700 hover:to-fuchsia-700 transition-all duration-300 shadow-lg hover:shadow-purple-500/25">
-        Get Started Free
-      </button>
+  <section class="py-20">
+    <div class="container mx-auto px-6">
+      <div
+        class="bg-gradient-to-r from-purple-800 to-indigo-800 rounded-2xl p-12 shadow-2xl"
+      >
+        <div class="flex flex-col md:flex-row items-center justify-between">
+          <div class="md:w-2/3 mb-8 md:mb-0">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+              Ready to transform your streaming experience?
+            </h2>
+            <p class="text-purple-100 text-lg">
+              Join thousands of creators and organizers who are already using
+              Lively to connect with their audience.
+            </p>
+          </div>
+          <div>
+            <button
+            (click)="login()"
+              class="bg-white hover:bg-purple-100 text-purple-800 font-bold py-4 px-8 rounded-full shadow-lg transition text-lg"
+            >
+              Get Started Now
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-purple-900 py-12">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between">
+        <!-- Logo & Description -->
+        <div class="md:w-1/3 mb-8 md:mb-0">
+          <span class="text-white font-bold text-2xl">Lively</span>
+          <p class="text-purple-200 mt-4">
+            Share your stream with anyone, anywhere. The simplest way to
+            broadcast your video to the world.
+          </p>
+          <div class="flex space-x-4 mt-6">
+            <a href="#" class="text-purple-200 hover:text-white transition">
+              <svg
+                class="w-6 h-6"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"
+                ></path>
+              </svg>
+            </a>
+            <a href="#" class="text-purple-200 hover:text-white transition">
+              <svg
+                class="w-6 h-6"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"
+                ></path>
+              </svg>
+            </a>
+            <a href="#" class="text-purple-200 hover:text-white transition">
+              <svg
+                class="w-6 h-6"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="md:w-1/6 mb-8 md:mb-0">
+          <h4 class="text-lg font-bold text-white mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="text-purple-200 hover:text-white transition"
+                >Home</a
+              >
+            </li>
+            <li>
+              <a
+                href="#features"
+                class="text-purple-200 hover:text-white transition"
+                >Features</a
+              >
+            </li>
+            <li>
+              <a
+                href="#pricing"
+                class="text-purple-200 hover:text-white transition"
+                >Pricing</a
+              >
+            </li>
+            <li>
+              <a
+                href="#testimonials"
+                class="text-purple-200 hover:text-white transition"
+                >Testimonials</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- Support -->
+        <div class="md:w-1/6 mb-8 md:mb-0">
+          <h4 class="text-lg font-bold text-white mb-4">Support</h4>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="text-purple-200 hover:text-white transition"
+                >Help Center</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-purple-200 hover:text-white transition"
+                >API Documentation</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-purple-200 hover:text-white transition"
+                >Contact Us</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-purple-200 hover:text-white transition"
+                >Status</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div class="md:w-1/6">
+          <h4 class="text-lg font-bold text-white mb-4">Legal</h4>
+          <ul class="space-y-2">
+            <li>
+              <a href="#" class="text-purple-200 hover:text-white transition"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#" class="text-purple-200 hover:text-white transition"
+                >Terms of Service</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div
+        class="border-t border-purple-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center"
+      >
+        <p class="text-purple-300 text-sm mb-4 md:mb-0">
+          © 2025 Lively. All rights reserved.
+        </p>
+        <div class="flex space-x-6">
+          <a
+            href="#"
+            class="text-purple-300 hover:text-white text-sm transition"
+            >Privacy</a
+          >
+          <a
+            href="#"
+            class="text-purple-300 hover:text-white text-sm transition"
+            >Terms</a
+          >
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>
