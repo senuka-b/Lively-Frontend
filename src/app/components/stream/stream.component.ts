@@ -204,8 +204,7 @@ export class StreamComponent implements OnInit, OnDestroy {
         if (this.videoPlayer) {
           this.videoPlayer.nativeElement.srcObject = null;
           // Fallback video when stream ends
-          this.videoPlayer.nativeElement.src = 
-            'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+  
         }
       });
   }
