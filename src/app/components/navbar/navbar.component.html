@@ -95,8 +95,8 @@
   </div>
 
   <!-- Mobile Navigation Menu -->
-  <div [class]="isOpen ? 'opacity-100 md:hidden' : 'opacity-0'" class="transform transition-all ease-out duration-300 md:hidden">
-    <div class="px-2 pt-2 bg-purple-700/50  pb-3 space-y-1 sm:px-3 ">
+  <div [class]="isOpen ? 'opacity-100' : 'opacity-0'" class="transform transition-all ease-out duration-300 md:hidden">
+    <div class="px-2 pt-2 bg-purple-700/50  pb-3 space-y-1 sm:px-3 " [class]="isOpen ? '' : 'hidden'">
       <a
         href="#features"
         class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700"
@@ -116,7 +116,7 @@
         target="_blank"
         class="block py-2 text-gray-300 hover:text-white transition-colors duration-200"
       >
-        <span class="flex sm:ml-2 md:ml-0">
+        <span class="flex ml-2 md:ml-0">
           <img src="https://img.icons8.com/?size=100&id=LoL4bFzqmAa0&format=png&color=000000" alt="GitHub" class="h-5 w-5 mr-2" />
           Github
         </span> 
