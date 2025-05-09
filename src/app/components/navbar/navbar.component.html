@@ -1,0 +1,114 @@
+<nav
+  [class]="
+    scrolled
+      ? 'fixed top-0 left-0 right-0 z-50 bg-dark-900/90 backdrop-blur-lg shadow-md transition-all duration-300'
+      : 'absolute top-0 left-0 right-0 z-50 transition-all duration-300'
+  "
+>
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between h-16">
+      <!-- Logo -->
+      <div class="flex-shrink-0 flex items-center">
+        <a href="#" class="flex items-center">
+          <span class="text-2xl font-display font-bold gradient-text"
+            >Lively</span
+          >
+          <span
+            class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-500/20 text-primary-300"
+          >
+            Beta
+          </span>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex md:items-center md:space-x-8">
+        <a
+          href="#features"
+          class="text-gray-300 hover:text-white transition-colors duration-200"
+          >Features</a
+        >
+        <a
+          href="#how-it-works"
+          class="text-gray-300 hover:text-white transition-colors duration-200"
+          >How It Works</a
+        >
+
+        <a href="#get-started" class="btn-primary">Get Started</a>
+      </div>
+
+      <!-- Mobile Navigation Button -->
+      <div class="flex md:hidden items-center">
+        <button
+          type="button"
+          class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-dark-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500"
+          (click)="isOpen = !isOpen"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Open main menu</span>
+          <svg
+            [class]="isOpen ? 'hidden' : 'block'"
+            class="h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+
+          <svg
+            [class]="isOpen ? 'block' : 'hidden'"
+            class="h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Navigation Menu -->
+  <div [class]="isOpen ? 'opacity-100 md:hidden' : 'opacity-0'" class="transform transition-all ease-out duration-300 md:hidden">
+    <div class="px-2 pt-2 bg-purple-700/50  pb-3 space-y-1 sm:px-3 ">
+      <a
+        href="#features"
+        class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700"
+        (click)="isOpen = false"
+      >
+        Features
+      </a>
+      <a
+        href="#how-it-works"
+        class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-dark-700"
+        (click)="isOpen = false"
+      >
+        How It Works
+      </a>
+
+      <a
+        href="#get-started"
+        class="block px-3 py-2 rounded-md text-base font-medium bg-primary-500 text-white hover:bg-primary-600"
+        (click)="isOpen = false"
+      >
+        Get Started
+      </a>
+    </div>
+  </div>
+</nav>
