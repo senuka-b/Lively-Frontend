@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 
-
 @tailwind utilities;
 
 @theme {
@@ -137,8 +136,12 @@
     @apply w-full;
   }
 
-  .strike-through-completed {
-    @apply content-[''] absolute left-0 top-1/2 h-[3px] w-0 bg-primary-500 transition-all duration-300;
+  .strike-through-active {
+    @apply relative;
+  }
+
+  .strike-through-active::after {
+    @apply content-[''] absolute left-0 top-1/2 h-[3px] w-full bg-red-200 transition-all duration-300;
   }
 }
 
