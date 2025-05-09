@@ -136,6 +136,10 @@
   .strike-through:hover::after {
     @apply w-full;
   }
+
+  .strike-through-completed {
+    @apply content-[''] absolute left-0 top-1/2 h-[3px] w-0 bg-primary-500 transition-all duration-300;
+  }
 }
 
 @layer base {

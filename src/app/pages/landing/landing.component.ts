@@ -4,10 +4,11 @@ import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { HeroSectionComponent } from "../../components/hero-section/hero-section.component";
 import { FeaturesSectionComponent } from "../../components/features-section/features-section.component";
 import { HowItWorksSectionComponent } from "../../components/how-it-works-section/how-it-works-section.component";
+import { GetStartedComponent } from "../../components/get-started/get-started.component";
 
 @Component({
   selector: 'app-landing',
-  imports: [NavbarComponent, HeroSectionComponent, FeaturesSectionComponent, HowItWorksSectionComponent],
+  imports: [NavbarComponent, HeroSectionComponent, FeaturesSectionComponent, HowItWorksSectionComponent, GetStartedComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })
