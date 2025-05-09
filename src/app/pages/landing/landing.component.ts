@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavbarComponent } from "../../components/navbar/navbar.component";
 import { HeroSectionComponent } from "../../components/hero-section/hero-section.component";
+import { FeaturesSectionComponent } from "../../components/features-section/features-section.component";
+import { HowItWorksSectionComponent } from "../../components/how-it-works-section/how-it-works-section.component";
 
 @Component({
   selector: 'app-landing',
-  imports: [NavbarComponent, HeroSectionComponent],
+  imports: [NavbarComponent, HeroSectionComponent, FeaturesSectionComponent, HowItWorksSectionComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })
