@@ -14,6 +14,8 @@ import { Stream } from '../../model/Stream';
 import { StreamType } from '../../model/util/StreamType';
 import { streamQuality } from '../../model/util/StreamQuality';
 import { StreamInfo } from '../../model/StreamInfo';
+import { StreamDemoComponent } from "../../components/stream-demo/stream-demo.component";
+import { PastStreamComponent } from "../../components/past-stream/past-stream.component";
 
 
 
@@ -26,7 +28,7 @@ interface StreamStats {
 @Component({
   selector: 'app-studio',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, StreamDemoComponent, PastStreamComponent],
   templateUrl: './studio.component.html',
   styleUrl: './studio.component.css',
 })

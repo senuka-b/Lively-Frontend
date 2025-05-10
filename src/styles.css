@@ -75,6 +75,7 @@
   @apply bg-dark-800 rounded-xl p-6 transition-all duration-300;
 }
 
+
 @layer components {
   .btn-primary {
     @apply base-btn inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-900 bg-primary-500 hover:bg-primary-600 text-white focus:ring-primary-500;
@@ -142,6 +143,17 @@
 
   .strike-through-active::after {
     @apply content-[''] absolute left-0 top-1/2 h-[3px] w-full bg-red-200 transition-all duration-300;
+  }
+
+  .no-scroll-bar {
+    scroll-behavior: smooth;
+
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+  }
+
+  .no-scroll-bar::-webkit-scrollbar {
+    display: none;
   }
 }
 
