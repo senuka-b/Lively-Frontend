@@ -107,123 +107,17 @@
           class="dark-gradient-card"
         >
           
-        </div>
           <app-share-stream></app-share-stream>
+
+        </div>
+
+
         <!-- Stream Stats -->
         <div
-          class="bg-black/30 backdrop-blur-md rounded-xl p-5 shadow-[0_5px_25px_rgba(139,92,246,0.1)] border border-purple-900/30"
+          class="dark-gradient-card"
         >
-          <h3
-            class="text-lg font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-cyan-400"
-          >
-            Stream Stats
-          </h3>
-          <div class="grid grid-cols-2 gap-4">
-            <div
-              class="bg-gray-900/60 p-4 rounded-lg border border-purple-900/20 hover:border-purple-800/40 transition-all duration-300 hover:shadow-[0_0_15px_rgba(139,92,246,0.1)]"
-            >
-              <div class="flex items-center mb-1.5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-4 w-4 text-cyan-400 mr-1.5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                  ></path>
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                  ></path>
-                </svg>
-                <span class="text-xs font-medium text-cyan-300">Viewers</span>
-              </div>
-              <p
-                class="text-2xl font-bold bg-gradient-to-r from-cyan-300 to-blue-400 bg-clip-text text-transparent"
-              >
-                {{ streamInfo.stats.viewers }}
-              </p>
-            </div>
-            <div
-              class="bg-gray-900/60 p-4 rounded-lg border border-purple-900/20 hover:border-purple-800/40 transition-all duration-300 hover:shadow-[0_0_15px_rgba(139,92,246,0.1)]"
-            >
-              <div class="flex items-center mb-1.5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-4 w-4 text-pink-400 mr-1.5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  ></path>
-                </svg>
-                <span class="text-xs font-medium text-pink-300">Likes</span>
-              </div>
-              <p
-                class="text-2xl font-bold bg-gradient-to-r from-pink-300 to-red-400 bg-clip-text text-transparent"
-              >
-                {{ streamInfo.stats.likes }}
-              </p>
-            </div>
-            <div
-              class="bg-gray-900/60 p-4 rounded-lg col-span-2 border border-purple-900/20 hover:border-purple-800/40 transition-all duration-300 hover:shadow-[0_0_15px_rgba(139,92,246,0.1)]"
-            >
-              <div class="flex items-center mb-1.5">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-4 w-4 text-purple-400 mr-1.5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                  ></path>
-                </svg>
-                <span class="text-xs font-medium text-purple-300"
-                  >Duration</span
-                >
-              </div>
-              <p
-                class="text-2xl font-bold bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent"
-              >
-                {{ formatTime(streamInfo.stats.duration) }}
-              </p>
-            </div>
-
-            <div class="col-span-2">
-              <div class="mt-6">
-                <div class="flex items-center justify-between mb-2">
-                  <h4 class="text-md font-medium text-gray-300">Stream Health</h4>
-                  <span class="px-2 py-1 rounded-full text-xs font-medium bg-success-500 text-white">--</span>
-                </div>
-                
-                <div class="bg-dark-300 h-2 rounded-full">
-                  <div class="bg-success-500 h-2 rounded-full" style="width: 95%"></div>
-                </div>
-                
-                <div class="flex justify-between mt-2 text-xs text-gray-400">
-                  <span>0 dropped frames</span>
-                  <span>x Mbps</span>
-                </div>
-              </div>
-            </div>
-          </div>
+            <app-stream-stats></app-stream-stats>
+            
         </div>
 
         <!-- Stream Settings -->
