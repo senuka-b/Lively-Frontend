@@ -7,9 +7,9 @@ import { StreamDemoComponent } from '../stream-demo/stream-demo.component';
   selector: 'app-how-it-works-section',
   imports: [
     CreateStreamComponent,
-    StreamShareLinkDemoComponent,
     StreamDemoComponent,
-  ],
+    StreamShareLinkDemoComponent
+],
   templateUrl: './how-it-works-section.component.html',
   styleUrl: './how-it-works-section.component.css',
 })

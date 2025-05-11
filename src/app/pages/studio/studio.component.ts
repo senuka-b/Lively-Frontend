@@ -18,6 +18,8 @@ import { StreamDemoComponent } from "../../components/stream-demo/stream-demo.co
 import { PastStreamComponent } from "../../components/past-stream/past-stream.component";
 import { StreamControlsComponent } from "../../components/stream-controls/stream-controls.component";
 import { StreamInfoComponent } from "../../components/stream-info/stream-info.component";
+import { StreamShareLinkDemoComponent } from "../../components/stream-share-link-demo/stream-share-link-demo.component";
+import { ShareStreamComponent } from "../../components/share-stream/share-stream.component";
 
 
 
@@ -30,7 +32,7 @@ interface StreamStats {
 @Component({
   selector: 'app-studio',
   standalone: true,
-  imports: [CommonModule, FormsModule, PastStreamComponent, StreamControlsComponent, StreamInfoComponent],
+  imports: [CommonModule, FormsModule, PastStreamComponent, StreamControlsComponent, StreamInfoComponent, ShareStreamComponent],
   templateUrl: './studio.component.html',
   styleUrl: './studio.component.css',
 })

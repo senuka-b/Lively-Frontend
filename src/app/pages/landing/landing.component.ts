@@ -6,10 +6,11 @@ import { FeaturesSectionComponent } from "../../components/features-section/feat
 import { HowItWorksSectionComponent } from "../../components/how-it-works-section/how-it-works-section.component";
 import { GetStartedComponent } from "../../components/get-started/get-started.component";
 import { FooterComponent } from "../../components/footer/footer.component";
+import { StreamShareLinkDemoComponent } from "../../components/stream-share-link-demo/stream-share-link-demo.component";
 
 @Component({
   selector: 'app-landing',
-  imports: [NavbarComponent, HeroSectionComponent, FeaturesSectionComponent, HowItWorksSectionComponent, GetStartedComponent, FooterComponent],
+  imports: [NavbarComponent, HeroSectionComponent, FeaturesSectionComponent, HowItWorksSectionComponent, GetStartedComponent, FooterComponent, StreamShareLinkDemoComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })
