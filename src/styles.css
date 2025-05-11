@@ -75,7 +75,6 @@
   @apply bg-dark-800 rounded-xl p-6 transition-all duration-300;
 }
 
-
 @layer components {
   .btn-primary {
     @apply base-btn inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-900 bg-primary-500 hover:bg-primary-600 text-white focus:ring-primary-500;
@@ -145,11 +144,19 @@
     @apply content-[''] absolute left-0 top-1/2 h-[3px] w-full bg-red-200 transition-all duration-300;
   }
 
+  .dark-gradient-card {
+    @apply mt-6 bg-black/30 backdrop-blur-md rounded-xl p-5 shadow-[0_5px_25px_rgba(139,92,246,0.1)] border border-purple-900/30;
+  }
+
+  .title-secondary {
+    @apply text-xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-cyan-400;
+  }
+
   .no-scroll-bar {
     scroll-behavior: smooth;
 
-    -ms-overflow-style: none;  
-    scrollbar-width: none;  
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   .no-scroll-bar::-webkit-scrollbar {
@@ -161,8 +168,8 @@
   html {
     scroll-behavior: smooth;
 
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 
   html::-webkit-scrollbar {
