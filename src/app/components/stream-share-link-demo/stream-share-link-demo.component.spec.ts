@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StreamShareLinkComponent } from './stream-share-link.component';
+import { StreamShareLinkComponent } from './stream-share-link-demo.component';
 
 describe('StreamShareLinkComponent', () => {
   let component: StreamShareLinkComponent;
@@ -8,9 +8,8 @@ describe('StreamShareLinkComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StreamShareLinkComponent]
-    })
-    .compileComponents();
+      imports: [StreamShareLinkComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(StreamShareLinkComponent);
     component = fixture.componentInstance;
