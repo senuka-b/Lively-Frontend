@@ -1,5 +1,6 @@
 export type StreamInfo = {
     title: string;
+    code: string;
     description: string,
     streamerName: string;
     stats: StreamStats,

@@ -15,6 +15,7 @@ export class StreamQuickSettingsComponent {
 
   streamInfo: StreamInfo = {
     title: '',
+    code: '',
     description: '',
     streamerName: '',
     quality: streamQuality.FULL_HD,

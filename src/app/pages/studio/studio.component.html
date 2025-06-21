@@ -53,33 +53,33 @@
           <app-stream-controls></app-stream-controls>
         </div>
 
-        <!-- Stream Info -->
-        <div class="dark-gradient-card">
-          <app-stream-info></app-stream-info>
-        </div>
-
-        <!-- Stream History -->
-        <div class="dark-gradient-card">
-          <div class="flex-col items-center justify-center bg-transparent mt-3">
-            <div class="title-secondary">Stream History</div>
-
-            <div
-              class="text-center px-3 w-full overflow-scroll no-scroll-bar h-[355px] bg-black/30 backdrop-blur-md rounded-xl border border-purple-900/30"
-            >
-              <app-past-stream></app-past-stream>
-              <app-past-stream></app-past-stream>
-              <app-past-stream></app-past-stream>
-              <app-past-stream></app-past-stream>
+        <!-- Stream Info & History (show only when not live) -->
+        <div *ngIf="!isLive">
+          <div class="dark-gradient-card">
+            <app-stream-info></app-stream-info>
+          </div>
+          <div class="dark-gradient-card">
+            <div class="flex-col items-center justify-center bg-transparent mt-3">
+              <div class="title-secondary">Stream History</div>
+              <div
+                class="text-center px-3 w-full overflow-scroll no-scroll-bar h-[355px] bg-black/30 backdrop-blur-md rounded-xl border border-purple-900/30"
+              >
+                <app-past-stream></app-past-stream>
+                <app-past-stream></app-past-stream>
+                <app-past-stream></app-past-stream>
+                <app-past-stream></app-past-stream>
+              </div>
             </div>
           </div>
+        </div>
 
-          <!-- Video  -->
+        <!-- Video Preview (show only when live) -->
+        <div *ngIf="isLive" class="dark-gradient-card">
           <video
             #localVideo
-            *ngIf="isLive"
-            class="inset-0 rounded-lg"
             autoplay
             muted
+            class="w-full max-h-[400px] aspect-video rounded-2xl border-2 border-purple-500/40 shadow-lg bg-gradient-to-br from-purple-900/40 to-black/60 object-cover transition-all duration-300 hover:shadow-2xl"
           ></video>
         </div>
       </div>

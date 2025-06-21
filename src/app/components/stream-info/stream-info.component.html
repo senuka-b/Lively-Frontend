@@ -10,10 +10,11 @@ Stream Information
   >
   <input
     type="text"
-    [(ngModel)]="streamInfo.title"
+    [(ngModel)]="streamInfo!.title"
+    (ngModelChange)="onStreamInfoChange($event)"
     placeholder="My Awesome Stream"
     class="w-full bg-gray-900/80 border border-purple-900/40 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-white placeholder-gray-500 transition-all duration-300"
-    [disabled]="isLive"
+    [disabled]="isLive!"
   />
 </div>
 <div>
@@ -22,10 +23,11 @@ Stream Information
   >
   <input
     type="text"
-    [(ngModel)]="streamCode"
+    [(ngModel)]="streamInfo!.code"
+    (ngModelChange)="onStreamInfoChange($event)"
     placeholder="Custom Code"
     class="w-full bg-gray-900/80 border border-purple-900/40 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-white placeholder-gray-500 transition-all duration-300"
-    [disabled]="isLive"
+    [disabled]="isLive!"
   />
 </div>
 </div>
@@ -35,9 +37,10 @@ Stream Information
 >
 <textarea
   rows="2"
-  [(ngModel)]="streamInfo.description"
+  [(ngModel)]="streamInfo!.description"
+  (ngModelChange)="onStreamInfoChange($event)"
   placeholder="Tell viewers about your stream..."
   class="w-full bg-gray-900/80 border border-purple-900/40 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-white placeholder-gray-500 transition-all duration-300"
-  [disabled]="isLive"
+  [disabled]="isLive!"
 ></textarea>
 </div>

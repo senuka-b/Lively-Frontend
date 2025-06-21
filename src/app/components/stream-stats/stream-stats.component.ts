@@ -12,6 +12,7 @@ import { StreamType } from '../../model/util/StreamType';
 export class StreamStatsComponent {
   streamInfo: StreamInfo = {
     title: '',
+    code: '',
     description: '',
     streamerName: '',
     quality: streamQuality.FULL_HD,

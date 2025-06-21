@@ -42,6 +42,7 @@ export class StreamComponent implements OnInit, OnDestroy {
   
   streamInfo: StreamInfo = {
     title: '',
+    code: '',
     streamerName: '',
     description: '',
     quality: streamQuality.FULL_HD,
@@ -59,6 +60,8 @@ export class StreamComponent implements OnInit, OnDestroy {
   currentMessage: string = '';
   chatMessages: ChatMessage[] = [];
   
+  isLive? : boolean;
+
   private streamCheckInterval?: number;
   
   private chatSubscription?: Subscription;
@@ -194,19 +197,19 @@ export class StreamComponent implements OnInit, OnDestroy {
 
 
   private setupStreamEndListener(): void {
-    this.streamEndSubscription = this.streamService
-      .listenForStreamEnd(this.streamCode)
-      .subscribe(() => {
-        console.log('Stream has ended');
-        this.hasEnded = true;
-        this.isStreamActive = false;
+    // this.streamEndSubscription = this.streamService
+    //   .listenForStreamEnd(this.streamCode)
+    //   .subscribe(() => {
+    //     console.log('Stream has ended');
+    //     this.hasEnded = true;
+    //     this.isStreamActive = false;
 
-        if (this.videoPlayer) {
-          this.videoPlayer.nativeElement.srcObject = null;
-          // Fallback video when stream ends
+    //     if (this.videoPlayer) {
+    //       this.videoPlayer.nativeElement.srcObject = null;
+    //       // Fallback video when stream ends
   
-        }
-      });
+    //     }
+    //   });
   }
 
 

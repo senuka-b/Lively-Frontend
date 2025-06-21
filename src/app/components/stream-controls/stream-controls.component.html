@@ -2,6 +2,7 @@
   <div class="flex flex-wrap items-center justify-between gap-4">
     <div class="flex flex-wrap gap-3">
       <button
+      (click)="goLive()"
         [disabled]="isLive"
         class="flex items-center px-5 py-2.5 rounded-lg font-medium transition-all duration-300"
         [ngClass]="
@@ -99,9 +100,9 @@
           class="h-2.5 w-2.5 rounded-full mr-2 animate-pulse"
           *ngIf="isLive"
           [ngClass]="
-            streamInfo.quality === 'HD 720p'
+            streamInfo?.quality === 'HD 720p'
               ? 'bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.7)]'
-              : streamInfo.quality === 'Full HD 1080p'
+              : streamInfo?.quality === 'Full HD 1080p'
               ? 'bg-blue-500 shadow-[0_0_5px_rgba(59,130,246,0.7)]'
               : 'bg-amber-500 shadow-[0_0_5px_rgba(245,158,11,0.7)]'
           "
@@ -109,9 +110,9 @@
         <span
           class="text-sm font-medium"
           [ngClass]="
-            streamInfo.quality === 'HD 720p'
+            streamInfo?.quality === 'HD 720p'
               ? 'text-green-400'
-              : streamInfo.quality === 'Full HD 1080p'
+              : streamInfo?.quality === 'Full HD 1080p'
               ? 'text-blue-400'
               : 'text-amber-400'
           "

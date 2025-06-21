@@ -10,7 +10,7 @@ import { StreamShareLinkDemoComponent } from "../../components/stream-share-link
 
 @Component({
   selector: 'app-landing',
-  imports: [NavbarComponent, HeroSectionComponent, FeaturesSectionComponent, HowItWorksSectionComponent, GetStartedComponent, FooterComponent, StreamShareLinkDemoComponent],
+  imports: [NavbarComponent, HeroSectionComponent, FeaturesSectionComponent, HowItWorksSectionComponent, GetStartedComponent, FooterComponent],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.css'
 })

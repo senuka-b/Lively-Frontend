@@ -38,12 +38,13 @@ interface StreamStats {
   templateUrl: './studio.component.html',
   styleUrl: './studio.component.css',
 })
-export class StudioComponent implements OnDestroy {
+export class StudioComponent implements OnDestroy, OnInit {
   @ViewChild('localVideo', { static: false })
   localVideo!: ElementRef<HTMLVideoElement>;
 
   streamInfo: StreamInfo = {
     title: '',
+    code: this.generateRandomId(),
     description: '',
     streamerName: '',
     quality: streamQuality.FULL_HD,
@@ -55,14 +56,13 @@ export class StudioComponent implements OnDestroy {
     }
   }
 
-  streamCode: string = this.generateRandomId();
   streamTitle: string = '';
   streamDescription: string = '';
-  
+
   isLive: boolean = false;
   isLoading: boolean = false;
   stream?: Stream;
-  
+
 
   readonly streamTypes = StreamType;
   readonly streamQualities = streamQuality;
@@ -84,8 +84,27 @@ export class StudioComponent implements OnDestroy {
     private streamService: StreamService,
     private authService: AuthenticationService,
     private router: Router
-  ) {}
+  ) { }
 
+
+  ngOnInit(): void {
+    this.streamService.stream$.subscribe((stream) => {
+      this.stream = stream;
+    })
+
+    this.streamService.streamInfo$.subscribe((streamInfo) => {
+      this.streamInfo = streamInfo;
+    })
+
+    this.streamService.isLive$.subscribe((isLive) => {
+      this.isLive = isLive;
+
+      isLive
+        ? this.handleStreamCreationSuccess(this.stream!)
+        : this.handleStreamCreationError();
+
+    })
+  }
 
   ngOnDestroy(): void {
     this.cleanupResources();
@@ -93,7 +112,7 @@ export class StudioComponent implements OnDestroy {
 
 
   get fullStreamUrl(): string {
-    return `${window.location.origin}/watch/${this.streamCode}`;
+    return `${window.location.origin}/watch/${this.streamInfo.code}`;
   }
 
 
@@ -103,18 +122,9 @@ export class StudioComponent implements OnDestroy {
     }
 
     this.isLoading = true;
-    console.log('Attempting to start stream with code:', this.streamCode);
+    console.log('Attempting to start stream with code:', this.streamInfo.code);
 
-    this.createStreamOnServer()
-      .pipe(
-        finalize(() => {
-          this.isLoading = false;
-        })
-      )
-      .subscribe({
-        next: (response) => this.handleStreamCreationSuccess(response),
-        error: (error) => this.handleStreamCreationError(error)
-      });
+
   }
 
 
@@ -125,16 +135,16 @@ export class StudioComponent implements OnDestroy {
 
     this.isLive = false;
     this.cleanupResources();
-    
+
     this.webrtcService.stopStream().then(() => {
       if (this.localVideo?.nativeElement) {
         this.localVideo.nativeElement.srcObject = null;
       }
     });
 
-    this.streamService.notifyEndStream(this.streamCode);
-    this.streamService.deleteStream(this.streamCode);
-    
+    this.streamService.notifyEndStream(this.streamInfo.code);
+    this.streamService.deleteStream(this.streamInfo.code);
+
     this.resetStats();
   }
 
@@ -171,42 +181,28 @@ export class StudioComponent implements OnDestroy {
   }
 
 
-  private createStreamOnServer() {
-    return this.streamService.createStream({
-      owner: this.currentUser,
-      code: this.streamCode,
-      title: this.streamTitle,
-      description: this.streamDescription,
-    }).pipe(
-      catchError((error) => {
-        if (error?.status === HttpStatusCode.BadRequest) {
-          alert('This stream code is already taken! Please try again.');
-        } else {
-          alert('Failed to create stream. Please try again.');
-        }
-        return throwError(() => error);
-      })
-    );
-  }
 
 
-  private async handleStreamCreationSuccess(response: any): Promise<void> {
+  private async handleStreamCreationSuccess(response: Stream): Promise<void> {
     console.log('Stream created on server:', response);
     this.stream = response;
     this.isLive = true;
 
     try {
       await this.webrtcService.startStream(this.streamInfo.type);
-      
+
       if (this.localVideo?.nativeElement) {
+
         this.localVideo.nativeElement.srcObject = this.webrtcService.localStreamValue;
         this.localVideo.nativeElement.muted = true; // Mute local preview
+
+
       }
 
       this.listenForViewers();
-      
+
       this.startTimers();
-      
+
       alert('Stream started successfully!');
     } catch (error) {
       console.error('Failed to start stream:', error);
@@ -216,19 +212,18 @@ export class StudioComponent implements OnDestroy {
   }
 
 
-  private handleStreamCreationError(error: any): void {
-    console.error('Stream creation error:', error);
-    this.isLive = false;
+  private handleStreamCreationError(): void {
+
   }
 
   private listenForViewers(): void {
     this.viewerSubscription = this.streamService
-      .listenForNewJoin(this.streamCode)
+      .listenForNewJoin(this.streamInfo.code)
       .subscribe({
         next: (message) => {
           console.log('Received viewer connection request:', message);
           // Create a WebRTC connection for this viewer
-          this.webrtcService.createStreamerRTCConnection(message, this.streamCode);
+          this.webrtcService.createStreamerRTCConnection(message, this.streamInfo.code);
         },
         error: (err) => console.error('Error listening for viewers:', err)
       });
