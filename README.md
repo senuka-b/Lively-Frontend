@@ -13,7 +13,11 @@ ___
 
 ## Sample Demo Video
 
-<video controls src='readme-assets/beta-demo.mp4'></video>
 
 
-This is only  sample video that demonstrates the basic project functionality with production-level features disabled!
+
+https://github.com/user-attachments/assets/673cc48c-311b-4a4c-b6c0-988d5c17c663
+
+
+
+This is only a sample video that demonstrates the basic project functionality with production-level features disabled!
