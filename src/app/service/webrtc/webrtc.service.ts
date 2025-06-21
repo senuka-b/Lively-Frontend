@@ -3,6 +3,10 @@ import { CandidateDescriptionType } from '../../model/util/CandidateDescriptionT
 import { SignalService } from '../signal/signal.service';
 import { IceCandidate } from '../../model/IceCandidate';
 import { SdpDescription } from '../../model/SdpDescription';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { StreamInfo } from '../../model/StreamInfo';
+import { streamQuality } from '../../model/util/StreamQuality';
+import { StreamType } from '../../model/util/StreamType';
 
 @Injectable({
   providedIn: 'root',
@@ -14,22 +18,22 @@ export class WebrtcService {
 
   private readonly rtcConfig: RTCConfiguration = {
     iceServers: [
-        { urls: "stun:stun.l.google.com:19302" },
-        { urls: "stun:stun.l.google.com:5349" },
-        { urls: "stun:stun1.l.google.com:3478" },
-        { urls: "stun:stun1.l.google.com:5349" },
-        { urls: "stun:stun2.l.google.com:19302" },
-        { urls: "stun:stun2.l.google.com:5349" },
-        { urls: "stun:stun3.l.google.com:3478" },
-        { urls: "stun:stun3.l.google.com:5349" },
-        { urls: "stun:stun4.l.google.com:19302" },
-        { urls: "stun:stun4.l.google.com:5349" }
+      { urls: "stun:stun.l.google.com:19302" },
+      { urls: "stun:stun.l.google.com:5349" },
+      { urls: "stun:stun1.l.google.com:3478" },
+      { urls: "stun:stun1.l.google.com:5349" },
+      { urls: "stun:stun2.l.google.com:19302" },
+      { urls: "stun:stun2.l.google.com:5349" },
+      { urls: "stun:stun3.l.google.com:3478" },
+      { urls: "stun:stun3.l.google.com:5349" },
+      { urls: "stun:stun4.l.google.com:19302" },
+      { urls: "stun:stun4.l.google.com:5349" }
     ],
   };
 
-  constructor(private signalService: SignalService) {}
+  constructor(private signalService: SignalService) { }
 
-
+  
   get localStreamValue(): MediaStream | null {
     return this.localStream;
   }
@@ -92,7 +96,8 @@ export class WebrtcService {
 
 
   public async startStream(streamType: string): Promise<void> {
-      await this.startLocalStream(streamType);
+    await this.startLocalStream(streamType);
+    
   }
 
   public async stopStream(): Promise<void> {
@@ -109,17 +114,16 @@ export class WebrtcService {
       this.localStream =
         streamType === 'Webcam'
           ? await navigator.mediaDevices.getUserMedia({
-              video: true,
-              audio: true,
-            })
+            video: true,
+            audio: true,
+          })
           : await navigator.mediaDevices.getDisplayMedia({
-              video: true,
-              audio: true,
-            });
+            video: true,
+            audio: true,
+          });
 
       console.log(
-        `Local ${streamType} stream started with ${
-          this.localStream.getTracks().length
+        `Local ${streamType} stream started with ${this.localStream.getTracks().length
         } tracks`
       );
     } catch (error) {
@@ -165,6 +169,9 @@ export class WebrtcService {
     streamCode: string,
     viewerId: string
   ): void {
+    console.log("Setting up viewer connection listeners ", streamCode);
+    
+
     // Handle incoming tracks
     connection.ontrack = (event) => {
       console.log(`Viewer ${viewerId} received track:`, event.track.kind);
@@ -299,7 +306,7 @@ export class WebrtcService {
       const iceCandidate = new RTCIceCandidate(
         JSON.parse(candidate.candidateData)
       );
-      
+
       // For viewer connections, ensure we have a remote description before adding candidates
       if (candidate.type === 'OFFER' && !connection.remoteDescription) {
         return;
@@ -338,7 +345,7 @@ export class WebrtcService {
     viewerId: string
   ): void {
     if (!this.localStream) return;
-    
+
     this.localStream.getTracks().forEach((track) => {
       console.log(
         `Adding ${track.kind} track to connection for viewer ${viewerId}`

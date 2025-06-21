@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Stream } from '../../model/Stream';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { WebsocketService } from '../websocket/websocket.service';
+import { StreamInfo } from '../../model/StreamInfo';
+import { streamQuality } from '../../model/util/StreamQuality';
+import { StreamType } from '../../model/util/StreamType';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +15,49 @@ export class StreamService {
 
   private readonly baseUrl: string = environment.apiBaseUrl;
 
+  private isLiveSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private streamInfoSubject: BehaviorSubject<StreamInfo> = new BehaviorSubject<StreamInfo>({
+    title: '',
+    code: Math.random().toString(36).substring(2, 10),
+    description: '',
+    streamerName: '',
+    quality: streamQuality.FULL_HD,
+    type: StreamType.WEBCAM,
+    stats: {
+      viewers: 0,
+      likes: 0,
+      duration: 0
+    },
+    isChatEnabled: false
+  });
+  private streamSubject: BehaviorSubject<Stream | undefined> = new BehaviorSubject<Stream | undefined>(undefined);
+
+
   constructor(private http: HttpClient, private websocketService: WebsocketService) { }
+
+  get isLive$(): Observable<boolean> {
+    return this.isLiveSubject.asObservable();
+  }
+
+  set isLive$(value: boolean) {
+    this.isLiveSubject.next(value);
+  }
+
+  get streamInfo$() : Observable<StreamInfo> {
+    return this.streamInfoSubject.asObservable();
+  }
+
+  set streamInfo$(value: StreamInfo) {
+    this.streamInfoSubject.next(value);
+  }
+
+  get stream$() : Observable<Stream | undefined> {
+    return this.streamSubject.asObservable();
+  }
+
+  set stream$(value: Stream) {
+    this.streamSubject.next(value);
+  }
 
   public getStream(streamCode: string): Observable<Stream> {
     console.log("Fetching stream:", streamCode);

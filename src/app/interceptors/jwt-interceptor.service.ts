@@ -33,7 +33,7 @@ export class JwtInterceptorService implements HttpInterceptor {
       console.log('No token found, redirecting to login...');
 
 
-        this.router.navigate(['/login']);
+        // this.router.navigate(['/login']);
     
       
     }

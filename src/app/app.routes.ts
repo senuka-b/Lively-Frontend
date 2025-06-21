@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import { LandingComponent } from './components/landing/landing.component';
-import { StreamComponent } from './components/stream/stream.component';
-import { StudioComponent } from './components/studio/studio.component';
-import { LoginComponent } from './components/login/login.component';
-import { SignupComponent } from './components/signup/signup.component';
+
 import { AuthGuard } from './guards/auth.guard';
+import { LandingComponent } from './pages/landing/landing.component';
+import { StreamComponent } from './pages/stream/stream.component';
+import { StudioComponent } from './pages/studio/studio.component';
+import { AuthComponent } from './pages/auth/auth.component';
 
 export const routes: Routes = [
   {
@@ -13,11 +13,14 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent,
+    component: AuthComponent,
+    data: {isLogin: true}
   },
   {
     path: 'signup',
-    component: SignupComponent,
+    component: AuthComponent,
+    data: {isLogin: false}
+
   },
   {
     path: 'watch/:code',
