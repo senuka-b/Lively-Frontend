@@ -3,6 +3,10 @@ import { CandidateDescriptionType } from '../../model/util/CandidateDescriptionT
 import { SignalService } from '../signal/signal.service';
 import { IceCandidate } from '../../model/IceCandidate';
 import { SdpDescription } from '../../model/SdpDescription';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { StreamInfo } from '../../model/StreamInfo';
+import { streamQuality } from '../../model/util/StreamQuality';
+import { StreamType } from '../../model/util/StreamType';
 
 @Injectable({
   providedIn: 'root',
@@ -12,26 +16,33 @@ export class WebrtcService {
   private localStream: MediaStream | null = null;
   private remoteStreams: Map<string, MediaStream> = new Map();
 
-  private readonly rtcConfig = {
+  private readonly rtcConfig: RTCConfiguration = {
     iceServers: [
-      {
-        urls: [
-          'stun:stun1.l.google.com:19302',
-          'stun:stun2.l.google.com:19302',
-        ],
-      },
+      { urls: "stun:stun.l.google.com:19302" },
+      { urls: "stun:stun.l.google.com:5349" },
+      { urls: "stun:stun1.l.google.com:3478" },
+      { urls: "stun:stun1.l.google.com:5349" },
+      { urls: "stun:stun2.l.google.com:19302" },
+      { urls: "stun:stun2.l.google.com:5349" },
+      { urls: "stun:stun3.l.google.com:3478" },
+      { urls: "stun:stun3.l.google.com:5349" },
+      { urls: "stun:stun4.l.google.com:19302" },
+      { urls: "stun:stun4.l.google.com:5349" }
     ],
   };
 
-  constructor(private signalService: SignalService) {}
+  constructor(private signalService: SignalService) { }
 
+  
   get localStreamValue(): MediaStream | null {
     return this.localStream;
   }
 
-  getRemoteStream(viewerId: string): MediaStream | null {
+
+  public getRemoteStream(viewerId: string): MediaStream | null {
     return this.remoteStreams.get(viewerId) || null;
   }
+
 
   public createViewerRTCConnection(
     streamCode: string,
@@ -42,9 +53,7 @@ export class WebrtcService {
     );
 
     // Clean up any existing connection for this viewer
-    if (this.peerConnections.has(viewerId)) {
-      this.peerConnections.get(viewerId)?.close();
-    }
+    this.closeExistingConnection(viewerId);
 
     const connection = new RTCPeerConnection(this.rtcConfig);
     this.peerConnections.set(viewerId, connection);
@@ -52,6 +61,116 @@ export class WebrtcService {
     // Create a new remote stream for this connection
     const remoteStream = new MediaStream();
     this.remoteStreams.set(viewerId, remoteStream);
+
+    this.setupViewerConnectionListeners(connection, remoteStream, streamCode, viewerId);
+
+    return connection;
+  }
+
+
+  public createStreamerRTCConnection(
+    viewerId: string,
+    streamCode: string
+  ): RTCPeerConnection {
+    console.log(`Creating streamer connection for viewer ${viewerId}`);
+
+    // Clean up any existing connection for this viewer
+    this.closeExistingConnection(viewerId);
+
+    if (!this.localStream) {
+      console.error(
+        'Local stream not initialized. Cannot create streamer connection.'
+      );
+      throw new Error('Local stream not initialized');
+    }
+
+    const connection = new RTCPeerConnection(this.rtcConfig);
+    this.peerConnections.set(viewerId, connection);
+
+    this.addLocalTracksToConnection(connection, viewerId);
+    this.setupStreamerConnectionListeners(connection, streamCode, viewerId);
+    this.createAndSendOffer(connection, streamCode, viewerId);
+
+    return connection;
+  }
+
+
+  public async startStream(streamType: string): Promise<void> {
+    await this.startLocalStream(streamType);
+    
+  }
+
+  public async stopStream(): Promise<void> {
+    this.stopLocalStreamTracks();
+    this.closeAllConnections();
+    this.localStream = null;
+    this.remoteStreams.clear();
+  }
+
+  private async startLocalStream(streamType: string): Promise<void> {
+    try {
+      this.stopLocalStreamTracks();
+
+      this.localStream =
+        streamType === 'Webcam'
+          ? await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true,
+          })
+          : await navigator.mediaDevices.getDisplayMedia({
+            video: true,
+            audio: true,
+          });
+
+      console.log(
+        `Local ${streamType} stream started with ${this.localStream.getTracks().length
+        } tracks`
+      );
+    } catch (error) {
+      console.error('Error accessing media devices:', error);
+      throw error;
+    }
+  }
+
+
+
+  // ============= PRIVATE HELPER METHODS =============
+
+
+  private closeExistingConnection(viewerId: string): void {
+    if (this.peerConnections.has(viewerId)) {
+      this.peerConnections.get(viewerId)?.close();
+    }
+  }
+
+
+  private stopLocalStreamTracks(): void {
+    if (this.localStream) {
+      this.localStream.getTracks().forEach((track) => {
+        track.stop();
+        console.log(`Stopped ${track.kind} track`);
+      });
+    }
+  }
+
+
+  private closeAllConnections(): void {
+    this.peerConnections.forEach((connection, viewerId) => {
+      connection.close();
+      console.log(`Closed connection for ${viewerId}`);
+    });
+    this.peerConnections.clear();
+  }
+
+
+  private setupViewerConnectionListeners(
+    connection: RTCPeerConnection,
+    remoteStream: MediaStream,
+    streamCode: string,
+    viewerId: string
+  ): void {
+    console.log("Setting up viewer connection listeners ", streamCode);
+    
 
     // Handle incoming tracks
     connection.ontrack = (event) => {
@@ -65,32 +184,8 @@ export class WebrtcService {
       .subscribe((sdp: SdpDescription) => {
         console.log('Received SDP offer from streamer:', sdp);
 
-        if (connection && sdp && sdp.type === "OFFER") {
-          try {
-            const offer = new RTCSessionDescription(JSON.parse(sdp.sdp));
-
-            connection
-              .setRemoteDescription(offer)
-              .then(() => {
-                console.log('Viewer set remote description (offer)');
-                return connection.createAnswer();
-              })
-              .then((answer) => {
-                console.log('Viewer created answer');
-                return connection.setLocalDescription(answer);
-              })
-              .then(() => {
-                console.log('Viewer set local description (answer)');
-                // Send answer back to streamer
-                this.signalService.sendSDP(streamCode, viewerId, {
-                  sdp: JSON.stringify(connection.localDescription),
-                  type: "ANSWER",
-                });
-              })
-              .catch((err) => console.error('Error handling offer:', err));
-          } catch (e) {
-            console.error('Error parsing SDP offer:', e);
-          }
+        if (connection && sdp && sdp.type === 'OFFER') {
+          this.handleViewerSdpOffer(connection, sdp, streamCode, viewerId);
         }
       });
 
@@ -101,25 +196,7 @@ export class WebrtcService {
         console.log('Received ICE candidate from streamer:', candidate);
 
         if (connection && candidate && candidate.type === 'OFFER') {
-          try {
-            const iceCandidate = new RTCIceCandidate(
-              JSON.parse(candidate.candidateData)
-            );
-            if (!connection.remoteDescription) {
-              return;
-            }
-
-            connection
-              .addIceCandidate(iceCandidate)
-              .then(() =>
-                console.log('Viewer added ICE candidate from streamer')
-              )
-              .catch((err) =>
-                console.error('Error adding received ICE candidate:', err)
-              );
-          } catch (e) {
-            console.error('Error parsing ICE candidate:', e);
-          }
+          this.handleReceivedIceCandidate(connection, candidate);
         }
       });
 
@@ -140,59 +217,54 @@ export class WebrtcService {
         `Viewer ICE connection state: ${connection.iceConnectionState}`
       );
     };
-
-    return connection;
   }
 
-  public createStreamerRTCConnection(
-    viewerId: string,
-    streamCode: string
-  ): RTCPeerConnection {
-    console.log(`Creating streamer connection for viewer ${viewerId}`);
 
-    // Clean up any existing connection for this viewer
-    if (this.peerConnections.has(viewerId)) {
-      this.peerConnections.get(viewerId)?.close();
+  private handleViewerSdpOffer(
+    connection: RTCPeerConnection,
+    sdp: SdpDescription,
+    streamCode: string,
+    viewerId: string
+  ): void {
+    try {
+      const offer = new RTCSessionDescription(JSON.parse(sdp.sdp));
+
+      connection
+        .setRemoteDescription(offer)
+        .then(() => {
+          console.log('Viewer set remote description (offer)');
+          return connection.createAnswer();
+        })
+        .then((answer) => {
+          console.log('Viewer created answer');
+          return connection.setLocalDescription(answer);
+        })
+        .then(() => {
+          console.log('Viewer set local description (answer)');
+          // Send answer back to streamer
+          this.signalService.sendSDP(streamCode, viewerId, {
+            sdp: JSON.stringify(connection.localDescription),
+            type: 'ANSWER',
+          });
+        })
+        .catch((err) => console.error('Error handling offer:', err));
+    } catch (e) {
+      console.error('Error parsing SDP offer:', e);
     }
+  }
 
-    if (!this.localStream) {
-      console.error(
-        'Local stream not initialized. Cannot create streamer connection.'
-      );
-      throw new Error('Local stream not initialized');
-    }
 
-    const connection = new RTCPeerConnection(this.rtcConfig);
-    this.peerConnections.set(viewerId, connection);
-
-    // Add all local tracks to the connection
-    this.localStream.getTracks().forEach((track) => {
-      console.log(
-        `Adding ${track.kind} track to connection for viewer ${viewerId}`
-      );
-      connection.addTrack(track, this.localStream!);
-    });
-
+  private setupStreamerConnectionListeners(
+    connection: RTCPeerConnection,
+    streamCode: string,
+    viewerId: string
+  ): void {
     // Listen for ICE candidates from viewer
     this.signalService
       .listenForICECandidate(streamCode, viewerId)
       .subscribe((candidate: IceCandidate) => {
         if (connection && candidate && candidate.type === 'ANSWER') {
-          try {
-            const iceCandidate = new RTCIceCandidate(
-              JSON.parse(candidate.candidateData)
-            );
-            connection
-              .addIceCandidate(iceCandidate)
-              .then(() =>
-                console.log('Streamer added ICE candidate from viewer')
-              )
-              .catch((err) =>
-                console.error('Error adding received ICE candidate:', err)
-              );
-          } catch (e) {
-            console.error('Error parsing ICE candidate:', e);
-          }
+          this.handleReceivedIceCandidate(connection, candidate);
         }
       });
 
@@ -200,20 +272,8 @@ export class WebrtcService {
     this.signalService
       .listenForSDP(streamCode, viewerId)
       .subscribe((sdp: SdpDescription) => {
-        if (connection && sdp && sdp.type === "ANSWER") {
-          try {
-            const answer = new RTCSessionDescription(JSON.parse(sdp.sdp));
-            connection
-              .setRemoteDescription(answer)
-              .then(() =>
-                console.log('Streamer set remote description (answer)')
-              )
-              .catch((err) =>
-                console.error('Error setting remote description:', err)
-              );
-          } catch (e) {
-            console.error('Error parsing SDP answer:', e);
-          }
+        if (connection && sdp && sdp.type === 'ANSWER') {
+          this.handleStreamerSdpAnswer(connection, sdp);
         }
       });
 
@@ -226,7 +286,6 @@ export class WebrtcService {
         };
 
         console.log('Streamer generated OFFER ICE candidate', candidate);
-
         this.signalService.sendICECandidate(streamCode, viewerId, candidate);
       }
     };
@@ -236,8 +295,71 @@ export class WebrtcService {
         `Streamer ICE connection state for ${viewerId}: ${connection.iceConnectionState}`
       );
     };
+  }
 
-    // Create and send offer to viewer
+
+  private handleReceivedIceCandidate(
+    connection: RTCPeerConnection,
+    candidate: IceCandidate
+  ): void {
+    try {
+      const iceCandidate = new RTCIceCandidate(
+        JSON.parse(candidate.candidateData)
+      );
+
+      // For viewer connections, ensure we have a remote description before adding candidates
+      if (candidate.type === 'OFFER' && !connection.remoteDescription) {
+        return;
+      }
+
+      connection
+        .addIceCandidate(iceCandidate)
+        .then(() => console.log(`Added ICE candidate type: ${candidate.type}`))
+        .catch((err) =>
+          console.error('Error adding received ICE candidate:', err)
+        );
+    } catch (e) {
+      console.error('Error parsing ICE candidate:', e);
+    }
+  }
+
+
+  private handleStreamerSdpAnswer(
+    connection: RTCPeerConnection,
+    sdp: SdpDescription
+  ): void {
+    try {
+      const answer = new RTCSessionDescription(JSON.parse(sdp.sdp));
+      connection
+        .setRemoteDescription(answer)
+        .then(() => console.log('Streamer set remote description (answer)'))
+        .catch((err) => console.error('Error setting remote description:', err));
+    } catch (e) {
+      console.error('Error parsing SDP answer:', e);
+    }
+  }
+
+
+  private addLocalTracksToConnection(
+    connection: RTCPeerConnection,
+    viewerId: string
+  ): void {
+    if (!this.localStream) return;
+
+    this.localStream.getTracks().forEach((track) => {
+      console.log(
+        `Adding ${track.kind} track to connection for viewer ${viewerId}`
+      );
+      connection.addTrack(track, this.localStream!);
+    });
+  }
+
+
+  private createAndSendOffer(
+    connection: RTCPeerConnection,
+    streamCode: string,
+    viewerId: string
+  ): void {
     connection
       .createOffer()
       .then((offer) => {
@@ -248,63 +370,9 @@ export class WebrtcService {
         console.log('Streamer set local description (offer)');
         this.signalService.sendSDP(streamCode, viewerId, {
           sdp: JSON.stringify(connection.localDescription),
-          type: "OFFER",
+          type: 'OFFER',
         });
       })
       .catch((err) => console.error('Error creating offer:', err));
-
-    return connection;
-  }
-
-  async startLocalStream(streamType: string): Promise<void> {
-    try {
-      if (this.localStream) {
-        this.localStream.getTracks().forEach((track) => track.stop());
-      }
-
-      this.localStream =
-        streamType === 'Webcam'
-          ? await navigator.mediaDevices.getUserMedia({
-              video: true,
-              audio: true,
-            })
-          : await navigator.mediaDevices.getDisplayMedia({
-              video: true,
-              audio: true,
-            });
-
-      console.log(
-        `Local ${streamType} stream started with ${
-          this.localStream.getTracks().length
-        } tracks`
-      );
-    } catch (error) {
-      console.error('Error accessing media devices:', error);
-      throw error;
-    }
-  }
-
-  async startStream(code: string, streamType: string): Promise<void> {
-    await this.startLocalStream(streamType);
-  }
-
-  async stopStream(code: string): Promise<void> {
-    // Stop and clear local stream
-    if (this.localStream) {
-      this.localStream.getTracks().forEach((track) => {
-        track.stop();
-        console.log(`Stopped ${track.kind} track`);
-      });
-      this.localStream = null;
-    }
-
-    // Close all peer connections
-    this.peerConnections.forEach((connection, viewerId) => {
-      connection.close();
-      console.log(`Closed connection for ${viewerId}`);
-    });
-
-    this.peerConnections.clear();
-    this.remoteStreams.clear();
   }
 }

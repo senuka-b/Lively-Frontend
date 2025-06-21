@@ -1,0 +1,533 @@
+<!-- lively-viewer.component.html -->
+<div class="min-h-screen bg-gray-900 text-gray-100 flex flex-col">
+  <!-- Top Bar -->
+  <header
+    class="bg-gray-800 border-b border-gray-700 p-3 flex items-center justify-between"
+  >
+    <div class="flex items-center">
+      <h1
+        class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-300"
+      >
+        Lively
+      </h1>
+      <div class="ml-6 flex items-center">
+        <span
+          *ngIf="isStreamActive"
+          class="flex items-center px-2 py-1 rounded bg-red-500 text-xs font-medium"
+        >
+          <span class="animate-pulse mr-1">●</span> LIVE
+        </span>
+        <span
+          *ngIf="!isStreamActive"
+          class="px-2 py-1 rounded bg-gray-600 text-xs font-medium"
+          >OFFLINE</span
+        >
+      </div>
+    </div>
+
+    <div class="flex items-center space-x-4">
+      <div class="flex items-center text-sm">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4 text-gray-400 mr-1"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+          ></path>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+          ></path>
+        </svg>
+        <span>{{ streamInfo.stats.viewers }}</span>
+      </div>
+
+      <button
+        *ngIf="hasJoined"
+        (click)="likeStream()"
+        class="flex items-center text-sm hover:text-red-400 transition"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5 mr-1"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+          ></path>
+        </svg>
+        <span>{{ streamInfo.stats.likes }}</span>
+      </button>
+
+      <button class="p-1 rounded-full hover:bg-gray-700">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"
+          ></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="flex-grow flex flex-col lg:flex-row">
+    <!-- Video Stream Section -->
+    <div class="lg:flex-grow">
+      <div class="relative bg-black">
+        <!-- Video player area with 16:9 aspect ratio -->
+        <div class="w-full" style="padding-top: 56.25%">
+          <div class="absolute inset-0 flex items-center justify-center">
+            
+            <svg  *ngIf="hasEnded" xmlns="http://www.w3.org/2000/svg"  class="w-10/12 shadow-lg rounded-2xl"
+            viewBox="0 0 1280 720">
+              <!-- Define gradient -->
+              <defs>
+                <linearGradient id="purpleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#121212">
+                    <animate attributeName="stop-color" 
+                             values="#121212; #1a1a1a; #121212" 
+                             dur="10s" 
+                             repeatCount="indefinite" />
+                  </stop>
+                  <stop offset="50%" stop-color="#1e1e1e">
+                    <animate attributeName="stop-color" 
+                             values="#1e1e1e; #131313; #1e1e1e" 
+                             dur="10s" 
+                             repeatCount="indefinite" />
+                  </stop>
+                  <stop offset="100%" stop-color="#181818">
+                    <animate attributeName="stop-color" 
+                             values="#181818; #1d1d1d; #181818" 
+                             dur="10s" 
+                             repeatCount="indefinite" />
+                  </stop>
+                </linearGradient>
+                
+                <!-- Radial pulse animation -->
+                <radialGradient id="pulseGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                  <stop offset="0%" stop-color="rgba(147, 112, 219, 0.4)">
+                    <animate attributeName="stop-color" 
+                             values="rgba(147, 112, 219, 0.4); rgba(147, 112, 219, 0.1); rgba(147, 112, 219, 0.4)" 
+                             dur="4s" 
+                             repeatCount="indefinite" />
+                  </stop>
+                  <stop offset="100%" stop-color="rgba(147, 112, 219, 0)">
+                    <animate attributeName="stop-color" 
+                             values="rgba(147, 112, 219, 0); rgba(147, 112, 219, 0.05); rgba(147, 112, 219, 0)" 
+                             dur="4s" 
+                             repeatCount="indefinite" />
+                  </stop>
+                </radialGradient>
+              </defs>
+              
+              <!-- Background -->
+              <rect width="100%" height="100%" fill="url(#purpleGradient)" />
+              
+              <!-- Pulse effect -->
+              <circle cx="639" cy="360" r="300" fill="url(#pulseGradient)">
+                <animate attributeName="r" 
+                         values="280; 320; 280" 
+                         dur="4s" 
+                         repeatCount="indefinite" />
+              </circle>
+              
+              <!-- Floating particles -->
+              <g id="particles">
+                <circle cx="400" cy="250" r="5" fill="#8A2BE2" opacity="0.5">
+                  <animate attributeName="cy" 
+                           values="250; 240; 260; 250" 
+                           dur="8s" 
+                           repeatCount="indefinite" />
+                  <animate attributeName="opacity" 
+                           values="0.5; 0.8; 0.3; 0.5" 
+                           dur="6s" 
+                           repeatCount="indefinite" />
+                </circle>
+                <circle cx="750" cy="350" r="3" fill="#9370DB" opacity="0.6">
+                  <animate attributeName="cy" 
+                           values="350; 335; 360; 350" 
+                           dur="7s" 
+                           repeatCount="indefinite" />
+                  <animate attributeName="opacity" 
+                           values="0.6; 0.9; 0.4; 0.6" 
+                           dur="5s" 
+                           repeatCount="indefinite" />
+                </circle>
+                <circle cx="550" cy="450" r="4" fill="#5D3FD3" opacity="0.5">
+                  <animate attributeName="cy" 
+                           values="450; 435; 460; 450" 
+                           dur="9s" 
+                           repeatCount="indefinite" />
+                  <animate attributeName="opacity" 
+                           values="0.5; 0.7; 0.3; 0.5" 
+                           dur="7s" 
+                           repeatCount="indefinite" />
+                </circle>
+                <circle cx="900" cy="300" r="6" fill="#B19CD9" opacity="0.4">
+                  <animate attributeName="cy" 
+                           values="300; 285; 310; 300" 
+                           dur="10s" 
+                           repeatCount="indefinite" />
+                  <animate attributeName="opacity" 
+                           values="0.4; 0.7; 0.2; 0.4" 
+                           dur="8s" 
+                           repeatCount="indefinite" />
+                </circle>
+                
+                <!-- Additional particles for more interest -->
+                <circle cx="300" cy="500" r="4" fill="#A98CEF" opacity="0.5">
+                  <animate attributeName="cy" 
+                           values="500; 485; 510; 500" 
+                           dur="9.5s" 
+                           repeatCount="indefinite" />
+                  <animate attributeName="opacity" 
+                           values="0.5; 0.8; 0.3; 0.5" 
+                           dur="7.5s" 
+                           repeatCount="indefinite" />
+                </circle>
+                <circle cx="1000" cy="200" r="5" fill="#7B68EE" opacity="0.4">
+                  <animate attributeName="cy" 
+                           values="200; 185; 210; 200" 
+                           dur="8.5s" 
+                           repeatCount="indefinite" />
+                  <animate attributeName="opacity" 
+                           values="0.4; 0.7; 0.2; 0.4" 
+                           dur="6.5s" 
+                           repeatCount="indefinite" />
+                </circle>
+              </g>
+              
+              <!-- Text glow -->
+              <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="10" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+              
+              <!-- Text with glow -->
+              <g filter="url(#glow)">
+                <text x="639" y="360" font-family="Arial, sans-serif" font-size="72" font-weight="bold" text-anchor="middle" alignment-baseline="middle" fill="#fff">
+                  Stream has ended
+                  <animate attributeName="opacity" 
+                           values="0.8; 1; 0.8" 
+                           dur="3s" 
+                           repeatCount="indefinite" />
+                </text>
+              </g>
+              
+              <!-- Text shadow for depth -->
+              <text x="642" y="363" font-family="Arial, sans-serif" font-size="72" font-weight="bold" text-anchor="middle" alignment-baseline="middle" fill="rgba(147, 112, 219, 0.5)">
+                Stream has ended
+                <animate attributeName="opacity" 
+                         values="0.5; 0.7; 0.5" 
+                         dur="3s" 
+                         repeatCount="indefinite" />
+              </text>
+            </svg>
+            
+
+            <svg
+              *ngIf="!hasJoined"
+              class="w-10/12 shadow-lg rounded-2xl"
+              viewBox="0 0 1280 720"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Background gradient -->
+              <defs>
+                <linearGradient
+                  id="bg-gradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stop-color="#1a0033" />
+                  <stop offset="50%" stop-color="#330066" />
+                  <stop offset="100%" stop-color="#4b0082" />
+                </linearGradient>
+
+                <!-- Animation for the dots -->
+                <style>
+                  @keyframes dot1 {
+                    0%,
+                    100% {
+                      opacity: 0.3;
+                    }
+                    33% {
+                      opacity: 1;
+                    }
+                  }
+                  @keyframes dot2 {
+                    0%,
+                    100% {
+                      opacity: 0.3;
+                    }
+                    33% {
+                      opacity: 1;
+                    }
+                  }
+                  @keyframes dot3 {
+                    0%,
+                    100% {
+                      opacity: 0.3;
+                    }
+                    33% {
+                      opacity: 1;
+                    }
+                  }
+                  @keyframes pulse {
+                    0%,
+                    100% {
+                      transform: scale(1);
+                      opacity: 0.7;
+                    }
+                    50% {
+                      transform: scale(1.1);
+                      opacity: 1;
+                    }
+                  }
+                  .dot1 {
+                    animation: dot1 2s infinite;
+                    animation-delay: 0s;
+                  }
+                  .dot2 {
+                    animation: dot2 2s infinite;
+                    animation-delay: 0.5s;
+                  }
+                  .dot3 {
+                    animation: dot3 2s infinite;
+                    animation-delay: 1s;
+                  }
+                  .pulse {
+                    animation: pulse 3s infinite ease-in-out;
+                  }
+                </style>
+              </defs>
+
+              <!-- Background -->
+              <rect width="1280" height="720" fill="url(#bg-gradient)" />
+
+              <!-- Decorative elements -->
+              <circle cx="200" cy="150" r="80" fill="#6a0dad" opacity="0.3" />
+              <circle cx="1100" cy="600" r="120" fill="#4b0082" opacity="0.2" />
+              <circle cx="1000" cy="200" r="50" fill="#800080" opacity="0.15" />
+              <circle cx="300" cy="550" r="70" fill="#8a2be2" opacity="0.1" />
+
+              <!-- Subtle grid pattern -->
+              <path
+                d="M0,240 H1280 M0,480 H1280 M426,0 V720 M853,0 V720"
+                stroke="#ffffff"
+                stroke-width="0.5"
+                opacity="0.05"
+              />
+
+              <!-- Main content -->
+              <g transform="translate(640, 320)" text-anchor="middle">
+                <!-- Animated waiting icon -->
+                <g class="pulse">
+                  <circle
+                    cx="0"
+                    cy="0"
+                    r="60"
+                    fill="none"
+                    stroke="#d8bfd8"
+                    stroke-width="4"
+                  />
+                  <polygon points="20,-30 20,30 -20,0" fill="#d8bfd8" />
+                </g>
+
+                <!-- Text elements -->
+                <text
+                  x="0"
+                  y="110"
+                  fill="#ffffff"
+                  font-family="Arial, sans-serif"
+                  font-size="36"
+                  font-weight="bold"
+                >
+                  Waiting till you join the stream
+                </text>
+                <text
+                  x="0"
+                  y="150"
+                  fill="#ffffff"
+                  font-family="Arial, sans-serif"
+                  font-size="36"
+                  font-weight="bold"
+                >
+                  <tspan class="dot1">.</tspan>
+                  <tspan class="dot2">.</tspan>
+                  <tspan class="dot3">.</tspan>
+                </text>
+
+                <!-- Timestamp placeholder -->
+                <text
+                  x="0"
+                  y="200"
+                  fill="#d8bfd8"
+                  font-family="Arial, sans-serif"
+                  font-size="20"
+                >
+                  Enter your name & dive right in :)
+                </text>
+              </g>
+            </svg>
+            <video
+              #videoPlayer
+              *ngIf="hasJoined && !hasEnded"
+              class="w-full h-full object-cover"
+              autoplay
+            ></video>
+          </div>
+        </div>
+
+        <!-- Stream Info Bar -->
+        <div [ngClass]="hasJoined ? 'relative bg-transparent' : ''" class="bg-gray-800 p-3 border-b border-gray-700">
+          <h2 class="text-lg font-semibold">{{ streamInfo.title }}</h2>
+          <div class="flex items-center mt-1 text-sm text-gray-400">
+            <span>{{ streamInfo.streamerName }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Section -->
+    <div class="lg:w-80 border-l border-gray-700 flex flex-col">
+      <div class="bg-gray-800 p-3 border-b border-gray-700">
+        <h3 class="font-medium">Live Chat</h3>
+      </div>
+
+      <div
+        *ngIf="!hasJoined"
+        class="flex-grow flex flex-col items-center justify-center p-6"
+      >
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-sm">
+          <h4 class="text-lg font-medium mb-4 text-center">
+            Join the conversation
+          </h4>
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-400 mb-1"
+              >Guest Name</label
+            >
+            <input
+              [(ngModel)]="guestName"
+              type="text"
+              placeholder="Enter your name"
+              class="w-full bg-gray-700 border border-gray-600 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 text-white"
+            />
+          </div>
+          <button
+            (click)="joinStream()"
+            class="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition"
+          >
+            Join Chat
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="hasJoined" class="flex-grow flex flex-col">
+        <!-- Chat Messages -->
+        <div
+          #chatContainer
+          class="flex-grow p-3 overflow-y-auto"
+          style="max-height: calc(100vh - 200px)"
+        >
+          <div *ngFor="let msg of chatMessages" class="mb-3">
+            <div class="flex items-start">
+              <div
+                [ngClass]="{
+                  'bg-purple-600/30': msg.isCurrentUser,
+                  'bg-gray-700/50':
+                    !msg.isCurrentUser && msg.username !== 'System',
+                  'bg-gray-700/20': msg.username === 'System'
+                }"
+                class="rounded-lg px-3 py-2 max-w-[85%] break-words"
+              >
+                <div class="flex items-center mb-1">
+                  <span
+                    [ngClass]="{
+                      'text-purple-300': msg.isCurrentUser,
+                      'text-blue-300': msg.username === streamInfo.streamerName,
+                      'text-gray-400': msg.username === 'System',
+                      'text-gray-300':
+                        !msg.isCurrentUser &&
+                        msg.username !== streamInfo.streamerName &&
+                        msg.username !== 'System'
+                    }"
+                    class="font-medium text-sm"
+                  >
+                    {{ msg.username }}
+                  </span>
+                  <span class="ml-2 text-xs text-gray-500">{{
+                    formatTime(msg.timestamp)
+                  }}</span>
+                </div>
+                <p
+                  class="text-sm"
+                  [ngClass]="{
+                    'italic text-gray-400': msg.username === 'System'
+                  }"
+                >
+                  {{ msg.message }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat Input -->
+        <div class="p-3 border-t border-gray-700">
+          <div class="flex">
+            <input
+              [(ngModel)]="currentMessage"
+              (keyup.enter)="sendMessage()"
+              type="text"
+              placeholder="Type a message..."
+              class="flex-grow bg-gray-700 border border-gray-600 rounded-l-md px-3 py-2 focus:outline-none focus:ring-1 focus:ring-purple-500 text-white"
+            />
+            <button
+              (click)="sendMessage()"
+              class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-r-md flex items-center justify-center focus:outline-none"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

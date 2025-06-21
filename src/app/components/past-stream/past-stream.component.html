@@ -1,0 +1,65 @@
+
+    
+    <div  class="space-y-4 sm:mb-3">
+      <div 
+        class="bg-dark-900 rounded-lg overflow-hidden transition-all duration-200 hover:bg-dark-700 hover:shadow-lg group">
+        <div class="flex flex-col md:flex-row">
+          <div class="md:w-64 h-40 md:h-auto bg-dark-900 relative">
+            <!-- Stream thumbnail (placeholder) -->
+            <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-dark-700 to-dark-900">
+              <i class="bi bi-play-circle text-5xl text-gray-400 group-hover:text-primary-500 transition-colors duration-200"></i>
+            </div>
+            
+            <!-- Stream duration -->
+            <div class="absolute bottom-2 right-2 bg-dark-800/80 text-white text-xs px-2 py-1 rounded">
+              STREAM DURATION
+            </div>
+          </div>
+          
+          <div class="p-4 flex-1">
+            <div class="flex justify-between items-start">
+              <div>
+                <h4 class="text-lg font-medium text-white group-hover:text-primary-400 transition-colors duration-200">
+                  TITLE
+                </h4>
+                <p class="text-sm text-gray-400 mt-1 line-clamp-2">DESCRIPTION</p>
+              </div>
+              
+              <div class="md:flex items-center space-x-2 hidden">
+                <button class="p-2 text-gray-400 hover:text-white hover:bg-dark-300 rounded-full transition-colors">
+                  <i class="bi bi-arrow-repeat"></i>
+                </button>
+                <button class="p-2 text-gray-400 hover:text-white hover:bg-dark-300 rounded-full transition-colors">
+                  <i class="bi bi-three-dots-vertical"></i>
+                </button>
+              </div>
+            </div>
+            
+            <div class="mt-4 flex items-center text-sm text-gray-500">
+              <div class="flex items-center mr-4">
+                <i class="bi bi-calendar mr-1"></i>
+                <span>START DATE</span>
+              </div>
+              
+              <div class="flex items-center mr-4">
+                <i class="bi bi-eye mr-1"></i>
+                <span>X views</span>
+              </div>
+              
+              <div class="flex items-center">
+                <i class="bi bi-heart mr-1"></i>
+                <span>X likes</span>
+              </div>
+            </div>
+            
+            <div class="mt-4 flex">
+              <a  target="_blank" 
+                class="text-primary-400 hover:text-primary-300 text-sm flex items-center">
+                <i class="bi bi-link-45deg mr-1"></i>
+                <span>LINK</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

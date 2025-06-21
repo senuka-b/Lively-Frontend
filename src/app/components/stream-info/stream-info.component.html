@@ -1,0 +1,46 @@
+<h2
+class="title-secondary"
+>
+Stream Information
+</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+  <label class="block text-sm font-medium text-purple-300 mb-1.5"
+    >Stream Title</label
+  >
+  <input
+    type="text"
+    [(ngModel)]="streamInfo!.title"
+    (ngModelChange)="onStreamInfoChange($event)"
+    placeholder="My Awesome Stream"
+    class="w-full bg-gray-900/80 border border-purple-900/40 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-white placeholder-gray-500 transition-all duration-300"
+    [disabled]="isLive!"
+  />
+</div>
+<div>
+  <label class="block text-sm font-medium text-purple-300 mb-1.5"
+    >Stream Code</label
+  >
+  <input
+    type="text"
+    [(ngModel)]="streamInfo!.code"
+    (ngModelChange)="onStreamInfoChange($event)"
+    placeholder="Custom Code"
+    class="w-full bg-gray-900/80 border border-purple-900/40 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-white placeholder-gray-500 transition-all duration-300"
+    [disabled]="isLive!"
+  />
+</div>
+</div>
+<div class="mt-4">
+<label class="block text-sm font-medium text-purple-300 mb-1.5"
+  >Description</label
+>
+<textarea
+  rows="2"
+  [(ngModel)]="streamInfo!.description"
+  (ngModelChange)="onStreamInfoChange($event)"
+  placeholder="Tell viewers about your stream..."
+  class="w-full bg-gray-900/80 border border-purple-900/40 rounded-lg px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-white placeholder-gray-500 transition-all duration-300"
+  [disabled]="isLive!"
+></textarea>
+</div>

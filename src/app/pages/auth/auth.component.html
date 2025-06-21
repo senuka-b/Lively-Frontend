@@ -1,0 +1,146 @@
+<div class="min-h-screen bg-dark-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <!-- Background elements -->
+    <div class="absolute inset-0 overflow-hidden opacity-20 pointer-events-none">
+      <div class="absolute -top-24 -right-40 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl"></div>
+      <div class="absolute -bottom-24 -left-40 w-96 h-96 bg-secondary-500/20 rounded-full blur-3xl"></div>
+    </div>
+  
+    <div class="max-w-md w-full space-y-8 relative">
+      <!-- Logo -->
+      <div class="text-center">
+        <a href="/" class="inline-block">
+          <span class="text-3xl font-display font-bold gradient-text">Lively</span>
+        </a>
+        <h2 class="mt-6 text-3xl font-bold text-white">
+          {{ isLogin ? 'Welcome back' : 'Create your account' }}
+        </h2>
+        <p class="mt-2 text-sm text-gray-400">
+          {{ isLogin ? 'Don\'t have an account?' : 'Already have an account?' }}
+          <a 
+            [routerLink]="isLogin ? '/signup' : '/login'"
+            class="font-medium text-primary-400 hover:text-primary-300"
+          >
+            {{ isLogin ? 'Sign up' : 'Log in' }}
+          </a>
+        </p>
+      </div>
+  
+      <!-- Social Login Buttons -->
+      <div class="space-y-3">
+        <button class="w-full flex items-center justify-center px-4 py-2 border border-dark-600 rounded-md shadow-sm bg-dark-800 text-gray-300 hover:bg-dark-700 transition-colors">
+          <img src="https://www.google.com/favicon.ico" alt="Google" class="h-5 w-5 mr-2" />
+          Continue with Google
+        </button>
+        
+        <button class="w-full flex items-center justify-center px-4 py-2 border border-dark-600 rounded-md shadow-sm bg-dark-800 text-gray-300 hover:bg-dark-700 transition-colors">
+          <img src="https://img.icons8.com/?size=100&id=LoL4bFzqmAa0&format=png&color=000000" alt="GitHub" class="h-5 w-5 mr-2" />
+          Continue with GitHub
+        </button>
+        
+        <button class="w-full flex items-center justify-center px-4 py-2 border border-dark-600 rounded-md shadow-sm bg-dark-800 text-gray-300 hover:bg-dark-700 transition-colors">
+          <img src="https://img.icons8.com/?size=100&id=yoQabS8l0qpr&format=png&color=000000" alt="X" class="h-5 w-5 mr-2" />
+
+            Continue with Twitter
+
+        </button>
+      </div>
+  
+      <div class="relative">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-dark-600"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+          <span class="px-2 bg-dark-900 text-gray-400">Or continue with email</span>
+        </div>
+      </div>
+  
+      <!-- Auth Form -->
+      <form class="mt-8 space-y-6" (ngSubmit)="onSubmit()">
+        <!-- Username field (only for signup) -->
+        @if (!isLogin) {
+          <div>
+            <label for="username" class="block text-sm font-medium text-gray-300">Username</label>
+            <div class="mt-1">
+              <input
+                id="username"
+                name="username"
+                type="text"
+                required
+                [(ngModel)]="username"
+                class="appearance-none block w-full px-3 py-2 border border-dark-600 rounded-md shadow-sm bg-dark-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                placeholder="johndoe"
+              />
+            </div>
+          </div>
+        }
+  
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-300">Email address</label>
+          <div class="mt-1">
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              [(ngModel)]="email"
+              class="appearance-none block w-full px-3 py-2 border border-dark-600 rounded-md shadow-sm bg-dark-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              placeholder="you@example.com"
+            />
+          </div>
+        </div>
+  
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+          <div class="mt-1">
+            <input
+              id="password"
+              name="password"
+              type="password"
+              required
+              [(ngModel)]="password"
+              class="appearance-none block w-full px-3 py-2 border border-dark-600 rounded-md shadow-sm bg-dark-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              placeholder="••••••••"
+            />
+          </div>
+        </div>
+  
+        @if (isLogin) {
+          <div class="flex items-center justify-between">
+            <div class="flex items-center">
+              <input
+                id="remember-me"
+                name="remember-me"
+                type="checkbox"
+                class="h-4 w-4 bg-dark-800 border-dark-600 rounded text-primary-500 focus:ring-primary-500 focus:ring-offset-dark-900"
+              />
+              <label for="remember-me" class="ml-2 block text-sm text-gray-300">Remember me</label>
+            </div>
+  
+            <div class="text-sm">
+              <a href="#" class="font-medium text-primary-400 hover:text-primary-300">Forgot your password?</a>
+            </div>
+          </div>
+        }
+  
+        <div>
+          <button
+            type="submit"
+            class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 focus:ring-offset-dark-900"
+          >
+            {{ isLogin ? 'Sign in' : 'Create account' }}
+          </button>
+        </div>
+      </form>
+  
+      <!-- Terms and Privacy -->
+      @if (!isLogin) {
+        <p class="mt-4 text-center text-xs text-gray-400">
+          By signing up, you agree to our
+          <a href="#" class="text-primary-400 hover:text-primary-300">Terms of Service</a>
+          and
+          <a href="#" class="text-primary-400 hover:text-primary-300">Privacy Policy</a>
+        </p>
+      }
+    </div>
+  </div>
+  `

@@ -1,0 +1,106 @@
+<!-- lively-streaming.component.html -->
+<div class="min-h-screen bg-dark-900 text-white p-4 sm:p-6">
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <header
+      class="flex justify-between items-center mb-8 p-4 bg-black/30 backdrop-blur-md rounded-xl border border-purple-900/40 shadow-lg"
+    >
+      <div class="flex items-center">
+        <h1 class="gradient-text text-4xl font-display">Lively Studio</h1>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span
+          class="px-4 py-2 rounded-full font-semibold tracking-wide border transition-all duration-300 flex items-center"
+          [ngClass]="
+            isLive
+              ? 'bg-gradient-to-r from-red-600 to-red-500 border-red-400 shadow-[0_0_15px_rgba(239,68,68,0.4)] animate-pulse'
+              : 'bg-gray-900 border-gray-700'
+          "
+        >
+          <span
+            class="h-2 w-2 rounded-full mr-2"
+            [ngClass]="isLive ? 'bg-white animate-ping' : 'bg-gray-600'"
+          ></span>
+          {{ isLive ? "LIVE" : "OFFLINE" }}
+        </span>
+        <button
+          class="bg-gray-900 hover:bg-gray-800 p-3 rounded-full border border-purple-900/40 shadow-lg transition-all duration-300 hover:shadow-[0_0_15px_rgba(192,132,252,0.3)]"
+          (click)="logout()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="size-5"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
+            />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2">
+        <!-- Stream Controls -->
+
+        <div class="dark-gradient-card mt-0 p-2">
+          <app-stream-controls></app-stream-controls>
+        </div>
+
+        <!-- Stream Info & History (show only when not live) -->
+        <div *ngIf="!isLive">
+          <div class="dark-gradient-card">
+            <app-stream-info></app-stream-info>
+          </div>
+          <div class="dark-gradient-card">
+            <div class="flex-col items-center justify-center bg-transparent mt-3">
+              <div class="title-secondary">Stream History</div>
+              <div
+                class="text-center px-3 w-full overflow-scroll no-scroll-bar h-[355px] bg-black/30 backdrop-blur-md rounded-xl border border-purple-900/30"
+              >
+                <app-past-stream></app-past-stream>
+                <app-past-stream></app-past-stream>
+                <app-past-stream></app-past-stream>
+                <app-past-stream></app-past-stream>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Video Preview (show only when live) -->
+        <div *ngIf="isLive" class="dark-gradient-card">
+          <video
+            #localVideo
+            autoplay
+            muted
+            class="w-full max-h-[400px] aspect-video rounded-2xl border-2 border-purple-500/40 shadow-lg bg-gradient-to-br from-purple-900/40 to-black/60 object-cover transition-all duration-300 hover:shadow-2xl"
+          ></video>
+        </div>
+      </div>
+
+      <!-- Sidebar Stats & Info -->
+      <div class="space-y-6">
+        <!-- Stream Link -->
+        <div class="dark-gradient-card">
+          <app-share-stream></app-share-stream>
+        </div>
+
+        <!-- Stream Stats -->
+        <div class="dark-gradient-card">
+          <app-stream-stats></app-stream-stats>
+        </div>
+
+        <!-- Stream Settings -->
+        <div class="dark-gradient-card">
+          <app-stream-quick-settings></app-stream-quick-settings>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

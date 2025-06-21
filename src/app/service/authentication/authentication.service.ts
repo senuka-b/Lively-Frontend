@@ -12,7 +12,13 @@ import { User } from '../../model/User';
 })
 export class AuthenticationService {
 
-  private apiUrl = 'http://localhost:8080/api/auth'; // Replace with your API URL
+  private apiUrl = 'http://localhost:8080/api/auth'; 
+  private mockUser: User = {
+    id: 1,
+    email: "a",
+    username: "A_USER",
+    password: "a"
+  };
 
   constructor(
     private http: HttpClient,
@@ -59,5 +65,9 @@ export class AuthenticationService {
 
   signup(user: User): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/register`, user);
+  }
+
+  get user() : User {
+    return this.mockUser;
   }
 }

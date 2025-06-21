@@ -1,1 +1,191 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
+
+@tailwind utilities;
+
+@theme {
+  /* Font Families */
+  --font-sans: "Inter", "ui-sans-serif", "system-ui", "sans-serif";
+  --font-display: "Manrope", "Inter", "ui-sans-serif", "system-ui", "sans-serif";
+
+  /* Primary Colors */
+  --color-primary-100: #e0d0ff;
+  --color-primary-200: #c1a1ff;
+  --color-primary-300: #a272ff;
+  --color-primary-400: #8343ff;
+  --color-primary-500: #6415ff;
+  --color-primary-600: #5112cc;
+  --color-primary-700: #3e0e99;
+  --color-primary-800: #2a0a66;
+  --color-primary-900: #150533;
+
+  /* Secondary Colors */
+  --color-secondary-100: #d0f8ff;
+  --color-secondary-200: #a1f1ff;
+  --color-secondary-300: #72eaff;
+  --color-secondary-400: #43e3ff;
+  --color-secondary-500: #15dcff;
+  --color-secondary-600: #12b0cc;
+  --color-secondary-700: #0e8499;
+  --color-secondary-800: #0a5866;
+  --color-secondary-900: #052c33;
+
+  /* Dark Theme Colors */
+  --color-dark-100: #d5d5d8;
+  --color-dark-200: #acacb1;
+  --color-dark-300: #82828a;
+  --color-dark-400: #595963;
+  --color-dark-500: #2f2f3c;
+  --color-dark-600: #26262f;
+  --color-dark-700: #1c1c23;
+  --color-dark-800: #131318;
+  --color-dark-900: #09090c;
+
+  /* Animations */
+  --animation-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animation-float: float 6s ease-in-out infinite;
+  --animation-glow: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px rgba(100, 21, 255, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 20px rgba(100, 21, 255, 0.8),
+      0 0 30px rgba(100, 21, 255, 0.6);
+  }
+}
+
+@utility base-btn {
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-900;
+}
+
+@utility card {
+  @apply bg-dark-800 rounded-xl p-6 transition-all duration-300;
+}
+
+@layer components {
+  .btn-primary {
+    @apply base-btn inline-flex items-center justify-center px-6 py-3 rounded-lg font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-900 bg-primary-500 hover:bg-primary-600 text-white focus:ring-primary-500;
+  }
+
+  .btn-secondary {
+    @apply base-btn bg-secondary-500 hover:bg-secondary-600 text-dark-900 focus:ring-secondary-500;
+  }
+
+  .btn-outline {
+    @apply base-btn bg-transparent border-2 border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white focus:ring-primary-500;
+  }
+
+  .btn-link {
+    @apply inline-flex items-center font-medium text-primary-400 hover:text-primary-300;
+  }
+
+  .card-hover {
+    @apply card hover:shadow-lg hover:shadow-primary-500/20 hover:-translate-y-1;
+  }
+
+  .section {
+    @apply py-16 md:py-24;
+  }
+
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .gradient-text {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-primary-400 to-secondary-400;
+  }
+
+  .gradient-border {
+    @apply relative;
+  }
+
+  .gradient-border::before {
+    @apply content-[''] absolute -inset-0.5 rounded-lg bg-gradient-to-r from-primary-500 to-secondary-500 opacity-75 blur;
+  }
+
+  .title-underline {
+    @apply relative inline-block;
+  }
+
+  .title-underline::after {
+    @apply content-[''] absolute bottom-0 left-0 h-1 w-full rounded-full bg-gradient-to-r from-primary-500 to-secondary-500;
+  }
+
+  .strike-through {
+    @apply relative;
+  }
+
+  .strike-through::after {
+    @apply content-[''] absolute left-0 top-1/2 h-[3px] w-0 bg-primary-500 transition-all duration-300;
+  }
+
+  .strike-through:hover::after {
+    @apply w-full;
+  }
+
+  .strike-through-active {
+    @apply relative;
+  }
+
+  .strike-through-active::after {
+    @apply content-[''] absolute left-0 top-1/2 h-[3px] w-full bg-red-200 transition-all duration-300;
+  }
+
+  .dark-gradient-card {
+    @apply mt-6 bg-black/30 backdrop-blur-md rounded-xl p-5 shadow-[0_5px_25px_rgba(139,92,246,0.1)] border border-purple-900/30;
+  }
+
+  .title-secondary {
+    @apply text-xl font-semibold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-cyan-400;
+  }
+
+  .no-scroll-bar {
+    scroll-behavior: smooth;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scroll-bar::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  html::-webkit-scrollbar {
+    display: none; /* Chrome */
+  }
+
+  body {
+    @apply bg-dark-900 text-white font-sans;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display font-bold;
+  }
+}
