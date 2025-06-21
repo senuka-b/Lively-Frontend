@@ -6,6 +6,7 @@ export type StreamInfo = {
     stats: StreamStats,
     quality: string,
     type: string,
+    isChatEnabled: boolean,
   }
 
 type StreamStats = {

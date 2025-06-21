@@ -27,7 +27,8 @@ export class StreamService {
       viewers: 0,
       likes: 0,
       duration: 0
-    }
+    },
+    isChatEnabled: false
   });
   private streamSubject: BehaviorSubject<Stream | undefined> = new BehaviorSubject<Stream | undefined>(undefined);
 

@@ -24,7 +24,8 @@ export class StreamQuickSettingsComponent {
       viewers: 0,
       likes: 0,
       duration: 0
-    }
+    },
+    isChatEnabled: false
   }
 
 }

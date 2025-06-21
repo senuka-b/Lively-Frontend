@@ -21,7 +21,8 @@ export class StreamStatsComponent {
       viewers: 0,
       likes: 0,
       duration: 0
-    }
+      },
+    isChatEnabled: false
   }
 
 }

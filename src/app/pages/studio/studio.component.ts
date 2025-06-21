@@ -53,7 +53,8 @@ export class StudioComponent implements OnDestroy, OnInit {
       viewers: 0,
       likes: 0,
       duration: 0
-    }
+    },
+    isChatEnabled: false
   }
 
   streamTitle: string = '';

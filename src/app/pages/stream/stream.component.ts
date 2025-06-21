@@ -51,7 +51,8 @@ export class StreamComponent implements OnInit, OnDestroy {
       viewers: 0,
       likes: 0,
       duration: 0
-    }
+    },
+    isChatEnabled: false
    
   };
   isStreamActive: boolean = true;
