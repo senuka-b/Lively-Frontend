@@ -8,6 +8,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { Stream } from '../../model/Stream';
 import { AuthenticationService } from '../../service/authentication/authentication.service';
 import { HttpStatusCode } from '@angular/common/http';
+import { WebrtcService } from '../../service/webrtc/webrtc.service';
 
 @Component({
   selector: 'app-stream-controls',
@@ -20,7 +21,7 @@ export class StreamControlsComponent implements OnInit {
   streamInfo?: StreamInfo;
   isLive?: boolean;
 
-  constructor(private streamService: StreamService, private authService: AuthenticationService) { }
+  constructor(private streamService: StreamService, private authService: AuthenticationService, private webRtcService: WebrtcService) { }
 
   ngOnInit(): void {
     this.streamService.isLive$.subscribe((result: boolean) => {
@@ -52,12 +53,20 @@ export class StreamControlsComponent implements OnInit {
     });
   }
 
+  pauseStream() {}
+
+  endStream() {
+    this.streamService.isLive$ = false;
+    this.webRtcService.stopStream();
+    this.streamService.notifyEndStream(this.streamInfo!.code);
+  }
+
   private createStreamOnServer() : Observable<Stream> {
     return this.streamService.createStream({
       owner: this.authService.user,
       code: this.streamInfo!.code,
       title: this.streamInfo!.title,
-      description: this.streamInfo!.description,
+      description: this.streamInfo!.description
     }).pipe(
       catchError((error) => {
         if (error?.status === HttpStatusCode.BadRequest) {
@@ -70,7 +79,6 @@ export class StreamControlsComponent implements OnInit {
     );
   }
 
-  
 
   
 

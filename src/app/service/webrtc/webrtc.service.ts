@@ -7,6 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { StreamInfo } from '../../model/StreamInfo';
 import { streamQuality } from '../../model/util/StreamQuality';
 import { StreamType } from '../../model/util/StreamType';
+import { StreamService } from '../stream/stream.service';
 
 @Injectable({
   providedIn: 'root',
